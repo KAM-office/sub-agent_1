@@ -55,6 +55,10 @@ body {
   --yellow-light: #fefce8;
   --yellow-border: #fef08a;
 
+  --accent: #2563eb;
+  --border: #cbd5e1;
+  --bg-light: #f8fafc;
+
   --slide-width: 297mm;
   --slide-height: 210mm;
   --slide-padding: 18mm;
