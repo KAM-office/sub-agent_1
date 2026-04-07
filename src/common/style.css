@@ -896,6 +896,42 @@ body {
   }
 }
 
+/* ========================================
+   Worksheet (ワークシート - 記入欄)
+   ======================================== */
+.worksheet {
+  margin: 12px 0;
+}
+
+.ws-question {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 6px;
+  padding-left: 4px;
+  border-left: 3px solid var(--accent);
+}
+
+.ws-answer-area {
+  border: 2px dashed var(--border);
+  border-radius: 6px;
+  min-height: 48px;
+  margin-bottom: 12px;
+  background: var(--bg-light);
+  position: relative;
+}
+
+.ws-answer-area::after {
+  content: "記入欄";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--border);
+  font-size: 0.75rem;
+  pointer-events: none;
+}
+
 @page {
   size: A4 landscape;
   margin: 0;
