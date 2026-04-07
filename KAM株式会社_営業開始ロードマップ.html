@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1400">
+<title>KAM株式会社 営業開始ロードマップ</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F0F4FF;
+  --white: #FFFFFF;
+  --border: #D6E0F0;
+  --text-dark: #1A2341;
+  --text-mid: #4A5578;
+  --text-light: #8B95B0;
+  --primary: #4F6AE8;
+  --primary-light: #EBF0FF;
+  --primary-dark: #3A50C2;
+  --green: #22C993;
+  --green-light: #E6FAF2;
+  --red: #F0605D;
+  --red-light: #FFF0EF;
+  --orange: #F5A623;
+  --orange-light: #FFF8EB;
+  --purple: #9B6BF7;
+  --purple-light: #F3EEFF;
+  --cyan: #17C5D6;
+  --cyan-light: #E4FAFB;
+  --pink: #E96DB0;
+  --pink-light: #FFF0F8;
+  --gold: #D4A843;
+  --gold-light: #FFF9EB;
+  --shadow-sm: 0 2px 8px rgba(79,106,232,0.06);
+  --shadow-md: 0 8px 24px rgba(79,106,232,0.10);
+  --shadow-lg: 0 16px 40px rgba(79,106,232,0.12);
+  --radius: 18px;
+  --radius-sm: 12px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Plus Jakarta Sans',-apple-system,'Hiragino Sans',sans-serif; background:var(--bg); color:var(--text-dark); }
+
+.sidebar { position:fixed; left:0; top:0; width:280px; height:100vh; background:linear-gradient(180deg,#FFFFFF 0%,#F7F9FF 100%); border-right:1px solid var(--border); display:flex; flex-direction:column; z-index:100; }
+.sidebar-logo { padding:28px 24px 24px; display:flex; align-items:center; gap:14px; }
+.sidebar-logo .icon { width:44px; height:44px; border-radius:14px; background:linear-gradient(135deg,#4F6AE8,#9B6BF7); display:flex; align-items:center; justify-content:center; color:#fff; font-size:20px; font-weight:800; box-shadow:0 4px 12px rgba(79,106,232,0.3); }
+.sidebar-logo span { font-size:24px; font-weight:800; background:linear-gradient(135deg,var(--primary),var(--purple)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.sidebar-nav { flex:1; padding:0 16px; overflow-y:auto; }
+.nav-label { font-size:10px; font-weight:800; color:var(--text-light); text-transform:uppercase; letter-spacing:1.5px; padding:18px 14px 8px; }
+.nav-item { display:flex; align-items:center; gap:12px; padding:11px 14px; border-radius:12px; cursor:pointer; transition:all .25s; font-size:13.5px; font-weight:500; color:var(--text-mid); margin-bottom:2px; }
+.nav-item:hover { background:var(--primary-light); color:var(--primary); transform:translateX(2px); }
+.nav-item.active { background:var(--primary-light); color:var(--primary); font-weight:700; box-shadow:inset 3px 0 0 var(--primary); }
+.nav-item .emoji { font-size:17px; width:24px; text-align:center; }
+.nav-item .badge { margin-left:auto; font-size:10px; font-weight:800; padding:3px 9px; border-radius:20px; }
+.badge-green { background:var(--green-light); color:var(--green); }
+.badge-orange { background:var(--orange-light); color:var(--orange); }
+.badge-red { background:var(--red-light); color:var(--red); }
+.badge-purple { background:var(--purple-light); color:var(--purple); }
+.badge-gold { background:var(--gold-light); color:var(--gold); }
+
+.sidebar-cta { margin:16px; padding:22px; border-radius:16px; background:linear-gradient(135deg,#4F6AE8 0%,#9B6BF7 50%,#E96DB0 100%); color:#fff; box-shadow:0 8px 24px rgba(79,106,232,0.25); }
+.sidebar-cta h4 { font-size:15px; font-weight:800; margin-bottom:8px; }
+.sidebar-cta p { font-size:12px; opacity:.9; line-height:1.6; }
+.sidebar-user { padding:18px 22px; border-top:1px solid var(--border); display:flex; align-items:center; gap:12px; }
+.sidebar-user .avatar { width:38px; height:38px; border-radius:12px; background:linear-gradient(135deg,var(--cyan),var(--primary)); display:flex; align-items:center; justify-content:center; color:#fff; font-size:14px; font-weight:700; }
+.sidebar-user .info .name { font-size:13px; font-weight:700; color:var(--text-dark); }
+.sidebar-user .info .email { font-size:11px; color:var(--text-light); }
+
+.main { margin-left:280px; padding:32px 36px; min-height:100vh; }
+.header { display:flex; justify-content:space-between; align-items:center; margin-bottom:32px; }
+.header h1 { font-size:30px; font-weight:800; background:linear-gradient(135deg,var(--text-dark),var(--primary)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.header .subtitle { font-size:14px; color:var(--text-light); margin-top:6px; -webkit-text-fill-color:var(--text-light); }
+.header-right { display:flex; align-items:center; gap:14px; }
+.header-right .date-badge { background:var(--white); border:1px solid var(--border); border-radius:12px; padding:10px 18px; font-size:13px; font-weight:600; color:var(--text-mid); box-shadow:var(--shadow-sm); }
+.print-btn { background:linear-gradient(135deg,var(--primary),var(--purple)); color:#fff; border:none; border-radius:12px; padding:10px 22px; font-size:13px; font-weight:700; cursor:pointer; font-family:inherit; box-shadow:0 4px 12px rgba(79,106,232,0.25); transition:all .2s; }
+.print-btn:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(79,106,232,0.3); }
+
+.kpi-row { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-bottom:32px; }
+.kpi-card { background:var(--white); border:1px solid var(--border); border-radius:var(--radius); padding:26px; transition:all .3s; box-shadow:var(--shadow-sm); }
+.kpi-card:hover { box-shadow:var(--shadow-md); transform:translateY(-3px); }
+.kpi-card .kpi-header { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+.kpi-card .kpi-icon { width:50px; height:50px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:24px; }
+.kpi-card .kpi-label { font-size:12px; font-weight:600; color:var(--text-light); letter-spacing:.5px; }
+.kpi-card .kpi-value { font-size:32px; font-weight:800; color:var(--text-dark); }
+.kpi-card .kpi-sub { font-size:12px; color:var(--text-light); margin-top:6px; }
+.kpi-card.gradient { background:linear-gradient(135deg,#4F6AE8 0%,#9B6BF7 60%,#E96DB0 100%); border:none; box-shadow:0 8px 32px rgba(79,106,232,0.25); }
+.kpi-card.gradient .kpi-label,.kpi-card.gradient .kpi-value,.kpi-card.gradient .kpi-sub { color:#fff; }
+.kpi-card.gradient .kpi-icon { background:rgba(255,255,255,.2); }
+.kpi-card.gold-gradient { background:linear-gradient(135deg,#F5A623 0%,#D4A843 50%,#E8C547 100%); border:none; box-shadow:0 8px 24px rgba(212,168,67,0.25); }
+.kpi-card.gold-gradient .kpi-label,.kpi-card.gold-gradient .kpi-value,.kpi-card.gold-gradient .kpi-sub { color:#fff; }
+.kpi-card.gold-gradient .kpi-icon { background:rgba(255,255,255,.2); }
+
+.pills { background:var(--white); border:1px solid var(--border); padding:4px; border-radius:14px; display:inline-flex; box-shadow:var(--shadow-sm); }
+.pill { padding:9px 18px; border-radius:10px; font-size:12.5px; font-weight:600; cursor:pointer; transition:all .25s; color:var(--text-mid); border:none; background:transparent; font-family:inherit; }
+.pill.active { background:linear-gradient(135deg,var(--primary),var(--purple)); color:#fff; box-shadow:0 4px 12px rgba(79,106,232,0.2); }
+.pill:hover:not(.active) { background:var(--primary-light); }
+
+.timeline-section { margin-bottom:32px; }
+.section-header { display:flex; align-items:center; gap:14px; margin-bottom:18px; }
+.section-header .section-icon { width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px; }
+.section-header h2 { font-size:18px; font-weight:800; }
+.section-header .section-period { font-size:12px; font-weight:700; color:var(--text-light); margin-left:auto; background:var(--white); padding:5px 14px; border-radius:8px; border:1px solid var(--border); }
+
+.task-grid { display:grid; gap:10px; }
+.task-card { background:var(--white); border:1px solid var(--border); border-radius:16px; padding:18px 22px; display:grid; grid-template-columns:36px 1fr 110px 100px 110px; align-items:center; gap:16px; transition:all .25s; box-shadow:var(--shadow-sm); }
+.task-card:hover { box-shadow:var(--shadow-md); border-color:var(--primary); transform:translateX(3px); }
+.task-num { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; color:#fff; }
+.task-info h4 { font-size:14px; font-weight:700; margin-bottom:3px; }
+.task-info p { font-size:12px; color:var(--text-light); line-height:1.5; }
+.task-category { font-size:10.5px; font-weight:700; padding:5px 12px; border-radius:8px; text-align:center; white-space:nowrap; letter-spacing:.3px; }
+.task-deadline { font-size:12px; font-weight:600; color:var(--text-mid); text-align:center; }
+.task-status { font-size:10.5px; font-weight:800; padding:6px 14px; border-radius:10px; text-align:center; letter-spacing:.3px; }
+.status-todo { background:var(--bg); color:var(--text-light); }
+.status-urgent { background:var(--red-light); color:var(--red); }
+.status-soon { background:var(--orange-light); color:var(--orange); }
+.status-done { background:var(--green-light); color:var(--green); }
+
+.cat-legal { background:var(--purple-light); color:var(--purple); }
+.cat-labor { background:var(--cyan-light); color:var(--cyan); }
+.cat-vehicle { background:var(--orange-light); color:var(--orange); }
+.cat-insurance { background:var(--green-light); color:var(--green); }
+.cat-finance { background:var(--primary-light); color:var(--primary); }
+.cat-subsidy { background:var(--gold-light); color:var(--gold); }
+.cat-it { background:var(--pink-light); color:var(--pink); }
+.cat-ops { background:var(--red-light); color:var(--red); }
+
+/* Subsidy Section */
+.subsidy-overview { background:var(--white); border:1px solid var(--border); border-radius:var(--radius); padding:28px; margin-bottom:28px; box-shadow:var(--shadow-sm); }
+.subsidy-overview h3 { font-size:18px; font-weight:800; margin-bottom:6px; }
+.subsidy-overview .sub-desc { font-size:13px; color:var(--text-light); margin-bottom:20px; line-height:1.6; }
+.subsidy-total-bar { display:flex; align-items:center; gap:16px; padding:20px 24px; border-radius:16px; background:linear-gradient(135deg,#FFF9EB,#FFF0F8,#EBF0FF); margin-bottom:24px; }
+.subsidy-total-bar .total-label { font-size:13px; font-weight:600; color:var(--text-mid); }
+.subsidy-total-bar .total-value { font-size:36px; font-weight:800; background:linear-gradient(135deg,var(--gold),var(--orange)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.subsidy-total-bar .total-note { font-size:11px; color:var(--text-light); margin-left:auto; }
+
+.subsidy-cat-title { font-size:15px; font-weight:800; margin:24px 0 14px; padding-left:14px; border-left:4px solid; display:flex; align-items:center; gap:10px; }
+.subsidy-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:16px; }
+.subsidy-card { background:var(--white); border:1px solid var(--border); border-radius:16px; padding:22px; transition:all .3s; box-shadow:var(--shadow-sm); position:relative; overflow:hidden; }
+.subsidy-card:hover { box-shadow:var(--shadow-md); transform:translateY(-3px); }
+.subsidy-card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; }
+.subsidy-card.cat-a::before { background:linear-gradient(90deg,var(--green),var(--cyan)); }
+.subsidy-card.cat-b::before { background:linear-gradient(90deg,var(--primary),var(--purple)); }
+.subsidy-card.cat-c::before { background:linear-gradient(90deg,var(--orange),var(--gold)); }
+.subsidy-card.cat-d::before { background:linear-gradient(90deg,var(--pink),var(--red)); }
+.subsidy-card .s-header { display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+.subsidy-card .s-icon { width:42px; height:42px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px; }
+.subsidy-card h4 { font-size:14px; font-weight:700; line-height:1.3; }
+.subsidy-card .s-amount { font-size:24px; font-weight:800; margin-bottom:10px; }
+.subsidy-card .s-desc { font-size:12px; color:var(--text-light); line-height:1.6; margin-bottom:12px; }
+.subsidy-card .s-tag { display:inline-block; font-size:10.5px; font-weight:700; padding:4px 12px; border-radius:8px; margin-right:4px; }
+.subsidy-card .s-phase { display:inline-block; font-size:10px; font-weight:700; padding:3px 10px; border-radius:6px; background:var(--primary-light); color:var(--primary); }
+.subsidy-card .s-strategy { margin-top:10px; padding:10px 14px; border-radius:10px; background:var(--bg); font-size:11.5px; color:var(--text-mid); line-height:1.5; }
+.subsidy-card .s-strategy strong { color:var(--text-dark); }
+
+/* Gantt */
+.gantt-container { background:var(--white); border:1px solid var(--border); border-radius:var(--radius); padding:28px; margin-bottom:28px; overflow-x:auto; box-shadow:var(--shadow-sm); }
+.gantt-container h3 { font-size:18px; font-weight:800; margin-bottom:22px; }
+.gantt-table { width:100%; border-collapse:collapse; min-width:900px; }
+.gantt-table th { font-size:11px; font-weight:800; color:var(--text-light); text-align:center; padding:10px 4px; border-bottom:2px solid var(--border); }
+.gantt-table th:first-child { text-align:left; width:220px; }
+.gantt-table td { padding:7px 2px; border-bottom:1px solid #EEF2FF; height:38px; position:relative; }
+.gantt-table td:first-child { font-size:12px; font-weight:600; color:var(--text-mid); padding-left:10px; }
+.gantt-bar { height:26px; border-radius:8px; position:absolute; top:6px; }
+
+/* Detail Grid */
+.detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:28px; }
+.detail-card { background:var(--white); border:1px solid var(--border); border-radius:var(--radius); padding:26px; box-shadow:var(--shadow-sm); }
+.detail-card h3 { font-size:17px; font-weight:800; margin-bottom:18px; }
+.detail-table { width:100%; border-collapse:collapse; }
+.detail-table th { font-size:11px; font-weight:800; color:var(--text-light); text-align:left; padding:10px 10px; border-bottom:2px solid var(--border); }
+.detail-table td { font-size:13px; padding:11px 10px; border-bottom:1px solid #EEF2FF; color:var(--text-mid); }
+.detail-table tr:hover { background:var(--primary-light); }
+
+.notes-card { background:var(--white); border:1px solid var(--border); border-radius:var(--radius); padding:26px; margin-bottom:28px; box-shadow:var(--shadow-sm); }
+.notes-card h3 { font-size:17px; font-weight:800; margin-bottom:18px; }
+.note-item { display:flex; gap:14px; padding:14px 0; border-bottom:1px solid #EEF2FF; }
+.note-item:last-child { border-bottom:none; }
+.note-icon { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:17px; flex-shrink:0; }
+.note-text { font-size:13px; color:var(--text-mid); line-height:1.7; }
+.note-text strong { color:var(--text-dark); }
+
+@keyframes slideUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+.animate { animation:slideUp .5s ease both; }
+
+.tab-content { display:none; }
+.tab-content.active { display:block; }
+
+/* Strategy Box */
+.strategy-box { background:linear-gradient(135deg,#FFF9EB 0%,#FFF0F8 50%,#EBF0FF 100%); border:2px solid var(--gold); border-radius:var(--radius); padding:28px; margin-bottom:28px; }
+.strategy-box h3 { font-size:18px; font-weight:800; margin-bottom:16px; color:var(--gold); display:flex; align-items:center; gap:10px; }
+.strategy-box .strategy-steps { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+.strategy-step { background:var(--white); border-radius:14px; padding:18px; box-shadow:var(--shadow-sm); }
+.strategy-step .step-num { font-size:11px; font-weight:800; color:var(--primary); margin-bottom:8px; }
+.strategy-step h4 { font-size:13px; font-weight:700; margin-bottom:6px; }
+.strategy-step p { font-size:11.5px; color:var(--text-light); line-height:1.5; }
+.strategy-step .step-amount { font-size:16px; font-weight:800; color:var(--gold); margin-top:8px; }
+
+/* Subsidy Timeline */
+.subsidy-timeline { display:grid; grid-template-columns:repeat(8,1fr); gap:4px; margin-bottom:20px; }
+.st-month { text-align:center; }
+.st-month .st-label { font-size:10px; font-weight:700; color:var(--text-light); margin-bottom:4px; }
+.st-month .st-bar { height:8px; border-radius:4px; }
+
+@media print {
+  .sidebar { display:none; }
+  .main { margin-left:0; padding:16px; }
+  .print-btn { display:none; }
+}
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <div class="icon">K</div>
+    <span>KAM</span>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-label">ダッシュボード</div>
+    <div class="nav-item active" onclick="showTab('overview',this)"><span class="emoji">📊</span> 概要</div>
+    <div class="nav-item" onclick="showTab('timeline',this)"><span class="emoji">📋</span> 全タスク一覧</div>
+    <div class="nav-item" onclick="showTab('gantt',this)"><span class="emoji">📅</span> ガントチャート</div>
+    <div class="nav-label">カテゴリ別</div>
+    <div class="nav-item" onclick="showTab('timeline',this);filterCat('legal')"><span class="emoji">⚖️</span> 法務・定款</div>
+    <div class="nav-item" onclick="showTab('timeline',this);filterCat('labor')"><span class="emoji">👥</span> 人事・労務</div>
+    <div class="nav-item" onclick="showTab('timeline',this);filterCat('vehicle')"><span class="emoji">🚛</span> 車両関連</div>
+    <div class="nav-item" onclick="showTab('timeline',this);filterCat('insurance')"><span class="emoji">🛡️</span> 保険関連</div>
+    <div class="nav-item" onclick="showTab('timeline',this);filterCat('finance')"><span class="emoji">💰</span> 財務</div>
+    <div class="nav-item nav-sub" onclick="showTab('subsidy-strategy',this)" style="padding-left:28px;font-size:12.5px;color:var(--gold);"><span class="emoji">🎯</span> 助成金戦略 <span class="badge badge-gold">重要</span></div>
+    <div class="nav-item nav-sub" onclick="showTab('subsidy-list',this)" style="padding-left:28px;font-size:12.5px;color:var(--gold);"><span class="emoji">💎</span> 全助成金一覧 <span class="badge badge-gold">18件</span></div>
+    <div class="nav-item nav-sub" onclick="showTab('subsidy-schedule',this)" style="padding-left:28px;font-size:12.5px;color:var(--gold);"><span class="emoji">📅</span> 申請スケジュール</div>
+    <div class="nav-item" onclick="showTab('timeline',this);filterCat('it')"><span class="emoji">💻</span> IT・システム</div>
+    <div class="nav-item" onclick="showTab('timeline',this);filterCat('ops')"><span class="emoji">🔧</span> 運行・営業</div>
+    <div class="nav-label">資料</div>
+    <div class="nav-item" onclick="showTab('transfer',this)"><span class="emoji">🔄</span> 転籍・車両詳細</div>
+    <div class="nav-item" onclick="showTab('notes',this)"><span class="emoji">📝</span> 重要メモ</div>
+  </div>
+  <div class="sidebar-cta">
+    <h4>🎯 2026年11月 営業開始</h4>
+    <p>4/15スタート → 約7ヶ月で準備完了。助成金を最大限活用して賢く進めましょう。</p>
+  </div>
+  <div class="sidebar-user">
+    <div class="avatar">W</div>
+    <div class="info">
+      <div class="name">渡邊 将樹</div>
+      <div class="email">KAM株式会社 代表</div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="header animate">
+    <div>
+      <h1>KAM株式会社 営業開始ロードマップ</h1>
+      <div class="subtitle">2026年4月15日 → 11月 営業開始｜一般貨物運送事業｜助成金最大活用プラン</div>
+    </div>
+    <div class="header-right">
+      <div class="date-badge">📅 2026/03/27 更新</div>
+      <button class="print-btn" onclick="window.print()">🖨️ 印刷</button>
+    </div>
+  </div>
+
+  <!-- ===== OVERVIEW ===== -->
+  <div id="tab-overview" class="tab-content active">
+
+    <div class="kpi-row animate" style="animation-delay:.1s">
+      <div class="kpi-card gradient">
+        <div class="kpi-header"><div class="kpi-icon">🎯</div><div class="kpi-label">営業開始目標</div></div>
+        <div class="kpi-value">2026年11月</div>
+        <div class="kpi-sub">開始まで残り約7ヶ月</div>
+      </div>
+      <div class="kpi-card gold-gradient">
+        <div class="kpi-header"><div class="kpi-icon">💎</div><div class="kpi-label">助成金見込み総額</div></div>
+        <div class="kpi-value">約1,500万円+</div>
+        <div class="kpi-sub">18種の助成金・補助金を活用</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-header"><div class="kpi-icon" style="background:var(--cyan-light)">👥</div><div class="kpi-label">転籍予定人数</div></div>
+        <div class="kpi-value">7名</div>
+        <div class="kpi-sub">神奈川エアーメッセンジャーから</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-header"><div class="kpi-icon" style="background:var(--orange-light)">🚛</div><div class="kpi-label">譲渡車両</div></div>
+        <div class="kpi-value">8台</div>
+        <div class="kpi-sub">1BOX中心（事業用）</div>
+      </div>
+    </div>
+
+    <!-- Strategy Highlight -->
+    <div class="strategy-box animate" style="animation-delay:.15s">
+      <h3>💡 定年60歳未満設定 → 段階的引上げ＝助成金最大化戦略</h3>
+      <div class="strategy-steps">
+        <div class="strategy-step">
+          <div class="step-num">STEP 1（4-5月）</div>
+          <h4>就業規則で定年60歳未満に設定</h4>
+          <p>まず「定年なし or 59歳」で就業規則を策定・届出。これが後の引上げ助成金の起点になる</p>
+        </div>
+        <div class="strategy-step">
+          <div class="step-num">STEP 2（6-7月）</div>
+          <h4>定年を65歳に引上げ</h4>
+          <p>就業規則を変更し定年を65歳に。「65歳超雇用推進助成金」の受給要件を満たす</p>
+          <div class="step-amount">→ 最大30万円</div>
+        </div>
+        <div class="strategy-step">
+          <div class="step-num">STEP 3（営業開始後）</div>
+          <h4>さらに66歳以上 or 定年廃止へ</h4>
+          <p>継続雇用制度の導入や定年廃止で追加受給。対象者10人以上なら最大160万円</p>
+          <div class="step-amount">→ 最大160万円</div>
+        </div>
+        <div class="strategy-step">
+          <div class="step-num">同時並行</div>
+          <h4>育休規則の拡充</h4>
+          <p>育児休業規程・介護休業規程を法定以上に拡充。両立支援等助成金を申請</p>
+          <div class="step-amount">→ 最大140万円</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase Timeline -->
+    <div class="gantt-container animate" style="animation-delay:.2s">
+      <h3>📅 フェーズ概要タイムライン</h3>
+      <div style="display:grid; grid-template-columns:repeat(6,1fr); gap:12px; margin-top:16px;">
+        <div style="background:linear-gradient(135deg,#EBF0FF,#F3EEFF); border-radius:14px; padding:18px; border-left:4px solid var(--primary);">
+          <div style="font-size:11px; font-weight:800; color:var(--primary); margin-bottom:6px;">PHASE 1</div>
+          <div style="font-size:14px; font-weight:700; margin-bottom:4px;">基盤整備</div>
+          <div style="font-size:11px; color:var(--text-light);">4/15 - 5/31</div>
+          <div style="font-size:11px; color:var(--text-mid); margin-top:8px;">定款変更・定年60歳未満の就業規則作成・社保加入</div>
+        </div>
+        <div style="background:linear-gradient(135deg,#E4FAFB,#EBF0FF); border-radius:14px; padding:18px; border-left:4px solid var(--cyan);">
+          <div style="font-size:11px; font-weight:800; color:var(--cyan); margin-bottom:6px;">PHASE 2</div>
+          <div style="font-size:14px; font-weight:700; margin-bottom:4px;">人事・労務構築</div>
+          <div style="font-size:11px; color:var(--text-light);">6/1 - 6/30</div>
+          <div style="font-size:11px; color:var(--text-mid); margin-top:8px;">就業規則届出・定年引上げ・育休拡充・助成金一斉申請</div>
+        </div>
+        <div style="background:linear-gradient(135deg,#FFF8EB,#E6FAF2); border-radius:14px; padding:18px; border-left:4px solid var(--orange);">
+          <div style="font-size:11px; font-weight:800; color:var(--orange); margin-bottom:6px;">PHASE 3</div>
+          <div style="font-size:14px; font-weight:700; margin-bottom:4px;">車両・保険整備</div>
+          <div style="font-size:11px; color:var(--text-light);">7/1 - 8/31</div>
+          <div style="font-size:11px; color:var(--text-mid); margin-top:8px;">車両名義変更・緑ナンバー取得・保険切替</div>
+        </div>
+        <div style="background:linear-gradient(135deg,#FFF0F8,#FFF0EF); border-radius:14px; padding:18px; border-left:4px solid var(--pink);">
+          <div style="font-size:11px; font-weight:800; color:var(--pink); margin-bottom:6px;">PHASE 4</div>
+          <div style="font-size:14px; font-weight:700; margin-bottom:4px;">システム導入</div>
+          <div style="font-size:11px; color:var(--text-light);">8/1 - 9/30</div>
+          <div style="font-size:11px; color:var(--text-mid); margin-top:8px;">Jinjer・デジタコ・IT導入補助金活用</div>
+        </div>
+        <div style="background:linear-gradient(135deg,#E6FAF2,#E4FAFB); border-radius:14px; padding:18px; border-left:4px solid var(--green);">
+          <div style="font-size:11px; font-weight:800; color:var(--green); margin-bottom:6px;">PHASE 5</div>
+          <div style="font-size:14px; font-weight:700; margin-bottom:4px;">運行準備・リハ</div>
+          <div style="font-size:11px; color:var(--text-light);">10/1 - 10/31</div>
+          <div style="font-size:11px; color:var(--text-mid); margin-top:8px;">安全教育・試運行・人材開発助成金</div>
+        </div>
+        <div style="background:linear-gradient(135deg,#4F6AE8,#9B6BF7,#E96DB0); border-radius:14px; padding:18px; color:#fff;">
+          <div style="font-size:11px; font-weight:800; opacity:.9; margin-bottom:6px;">PHASE 6</div>
+          <div style="font-size:14px; font-weight:700; margin-bottom:4px;">営業開始</div>
+          <div style="font-size:11px; opacity:.8;">11/1 〜</div>
+          <div style="font-size:11px; opacity:.9; margin-top:8px;">運輸開始届提出・本格スタート</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 1-6 Tasks (same structure, updated content) -->
+    <div class="timeline-section animate" style="animation-delay:.3s">
+      <div class="section-header"><div class="section-icon" style="background:var(--primary-light)">⚡</div><h2>PHASE 1｜基盤整備</h2><div class="section-period">4/15 - 5/31</div></div>
+      <div class="task-grid">
+        <div class="task-card" data-cat="legal"><div class="task-num" style="background:var(--primary)">1</div><div class="task-info"><h4>定款変更案の作成</h4><p>事業目的に一般貨物自動車運送事業を明記。司法書士に依頼</p></div><div class="task-category cat-legal">法務</div><div class="task-deadline">4/15-4/25</div><div class="task-status status-urgent">最優先</div></div>
+        <div class="task-card" data-cat="legal"><div class="task-num" style="background:var(--primary)">2</div><div class="task-info"><h4>株主総会・定款変更決議</h4><p>臨時株主総会を開催し、定款変更を特別決議で承認</p></div><div class="task-category cat-legal">法務</div><div class="task-deadline">4/25-5/10</div><div class="task-status status-urgent">最優先</div></div>
+        <div class="task-card" data-cat="legal"><div class="task-num" style="background:var(--primary)">3</div><div class="task-info"><h4>定款変更の登記申請</h4><p>法務局へ変更登記申請（登録免許税3万円）。完了まで1-2週間</p></div><div class="task-category cat-legal">法務</div><div class="task-deadline">5/10-5/25</div><div class="task-status status-soon">次に対応</div></div>
+        <div class="task-card" data-cat="labor"><div class="task-num" style="background:var(--cyan)">4</div><div class="task-info"><h4>就業規則の作成（定年60歳未満で設定）</h4><p>⚠️ 定年を60歳未満（例：59歳）で設定。全ト協モデル就業規則ベース＋改善基準告示対応。社労士に依頼推奨</p></div><div class="task-category cat-labor">人事・労務</div><div class="task-deadline">4/15-5/31</div><div class="task-status status-urgent">最優先</div></div>
+        <div class="task-card" data-cat="labor"><div class="task-num" style="background:var(--cyan)">5</div><div class="task-info"><h4>育児・介護休業規程の整備</h4><p>法定以上の育児休業制度（パパ育休・看護休暇拡充等）を整備。両立支援等助成金の受給要件を満たす</p></div><div class="task-category cat-labor">人事・労務</div><div class="task-deadline">4/20-5/31</div><div class="task-status status-urgent">最優先</div></div>
+        <div class="task-card" data-cat="labor"><div class="task-num" style="background:var(--cyan)">6</div><div class="task-info"><h4>賃金規程・退職金規程の整備</h4><p>転籍者の現行条件を考慮。最低賃金30円以上引上げで業務改善助成金の要件も満たす設計</p></div><div class="task-category cat-labor">人事・労務</div><div class="task-deadline">4/20-5/31</div><div class="task-status status-urgent">最優先</div></div>
+        <div class="task-card" data-cat="insurance"><div class="task-num" style="background:var(--green)">7</div><div class="task-info"><h4>労働保険の保険関係成立届</h4><p>労基署へ提出（事業開始から10日以内）。労災保険の適用開始</p></div><div class="task-category cat-insurance">保険</div><div class="task-deadline">4/15-4/25</div><div class="task-status status-urgent">最優先</div></div>
+        <div class="task-card" data-cat="insurance"><div class="task-num" style="background:var(--green)">8</div><div class="task-info"><h4>雇用保険の適用事業所設置届</h4><p>ハローワークへ提出。事業所番号の取得 → 助成金申請に必要</p></div><div class="task-category cat-insurance">保険</div><div class="task-deadline">4/15-4/25</div><div class="task-status status-urgent">最優先</div></div>
+        <div class="task-card" data-cat="insurance"><div class="task-num" style="background:var(--green)">9</div><div class="task-info"><h4>社会保険の新規適用届</h4><p>年金事務所へ提出。健康保険・厚生年金保険の適用事業所手続き</p></div><div class="task-category cat-insurance">保険</div><div class="task-deadline">4/15-4/30</div><div class="task-status status-urgent">最優先</div></div>
+        <div class="task-card" data-cat="finance"><div class="task-num" style="background:var(--primary)">10</div><div class="task-info"><h4>税務署への届出</h4><p>青色申告承認申請・給与支払事務所開設届出・源泉所得税の納期の特例申請</p></div><div class="task-category cat-finance">財務</div><div class="task-deadline">4/15-5/15</div><div class="task-status status-urgent">最優先</div></div>
+        <div class="task-card" data-cat="finance"><div class="task-num" style="background:var(--primary)">11</div><div class="task-info"><h4>事業計画書・資金繰り表の作成</h4><p>初年度P/L予測・運転資金算出。各種補助金申請にも必須</p></div><div class="task-category cat-finance">財務</div><div class="task-deadline">4/15-5/31</div><div class="task-status status-soon">次に対応</div></div>
+        <div class="task-card" data-cat="finance"><div class="task-num" style="background:var(--primary)">12</div><div class="task-info"><h4>社労士の顧問契約締結</h4><p>就業規則作成・助成金申請代行の両面で早期に顧問契約。助成金の取りこぼし防止</p></div><div class="task-category cat-finance">財務</div><div class="task-deadline">4/15-4/30</div><div class="task-status status-urgent">最優先</div></div>
+      </div>
+    </div>
+
+    <div class="timeline-section animate" style="animation-delay:.35s">
+      <div class="section-header"><div class="section-icon" style="background:var(--cyan-light)">👥</div><h2>PHASE 2｜人事・労務構築 & 助成金一斉申請</h2><div class="section-period">6/1 - 6/30</div></div>
+      <div class="task-grid">
+        <div class="task-card" data-cat="labor"><div class="task-num" style="background:var(--cyan)">13</div><div class="task-info"><h4>就業規則の届出（定年60歳未満版）</h4><p>完成した就業規則を労基署へ届出。従業員の過半数代表者の意見書添付</p></div><div class="task-category cat-labor">人事・労務</div><div class="task-deadline">6/1-6/10</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="labor"><div class="task-num" style="background:var(--cyan)">14</div><div class="task-info"><h4>定年65歳への引上げ改定</h4><p>就業規則変更で定年を65歳に引上げ。65歳超雇用推進助成金の受給要件を満たす</p></div><div class="task-category cat-subsidy">助成金</div><div class="task-deadline">6/10-6/20</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="labor"><div class="task-num" style="background:var(--cyan)">15</div><div class="task-info"><h4>36協定の締結・届出</h4><p>運送業は年960時間上限（2024年4月〜罰則付き）</p></div><div class="task-category cat-labor">人事・労務</div><div class="task-deadline">6/1-6/15</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="labor"><div class="task-num" style="background:var(--cyan)">16</div><div class="task-info"><h4>転籍同意書の取得（7名分）</h4><p>各転籍者から書面で同意取得。労働条件通知書（新条件）も同時提示</p></div><div class="task-category cat-labor">人事・労務</div><div class="task-deadline">6/1-6/30</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="labor"><div class="task-num" style="background:var(--cyan)">17</div><div class="task-info"><h4>運行管理者・整備管理者の選任届</h4><p>運行管理者（貨物）＋整備管理者を選任し運輸支局へ届出</p></div><div class="task-category cat-labor">人事・労務</div><div class="task-deadline">6/15-6/30</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="finance"><div class="task-num" style="background:var(--gold)">18</div><div class="task-info"><h4>💎 65歳超雇用推進助成金の申請</h4><p>定年引上げ実施日の翌月から4ヶ月以内に申請。60歳未満→65歳引上げで最大30万円</p></div><div class="task-category cat-subsidy">助成金</div><div class="task-deadline">6/20-7/15</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="finance"><div class="task-num" style="background:var(--gold)">19</div><div class="task-info"><h4>💎 キャリアアップ助成金 計画届提出</h4><p>正社員化コース。転籍者の処遇改善と組み合わせ。事前計画届が必須</p></div><div class="task-category cat-subsidy">助成金</div><div class="task-deadline">6/1-6/15</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="finance"><div class="task-num" style="background:var(--gold)">20</div><div class="task-info"><h4>💎 両立支援等助成金の申請準備</h4><p>育児休業等支援コース・出生時両立支援コース。育休規程整備と連動</p></div><div class="task-category cat-subsidy">助成金</div><div class="task-deadline">6/1-6/30</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="finance"><div class="task-num" style="background:var(--gold)">21</div><div class="task-info"><h4>💎 働き方改革推進支援助成金の申請</h4><p>労働時間短縮・年休促進支援コース。就業規則整備＋デジタコ導入と連動</p></div><div class="task-category cat-subsidy">助成金</div><div class="task-deadline">6/1-6/30</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="finance"><div class="task-num" style="background:var(--gold)">22</div><div class="task-info"><h4>💎 業務改善助成金の申請</h4><p>事業場内最低賃金30円以上引上げ＋設備投資で最大600万円</p></div><div class="task-category cat-subsidy">助成金</div><div class="task-deadline">6/15-6/30</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="finance"><div class="task-num" style="background:var(--gold)">23</div><div class="task-info"><h4>💎 人材開発支援助成金 計画届提出</h4><p>運行管理者講習・安全運転教育の訓練計画を事前提出。経費の最大75%補助</p></div><div class="task-category cat-subsidy">助成金</div><div class="task-deadline">6/15-6/30</div><div class="task-status status-todo">予定</div></div>
+      </div>
+    </div>
+
+    <div class="timeline-section animate" style="animation-delay:.4s">
+      <div class="section-header"><div class="section-icon" style="background:var(--orange-light)">🚛</div><h2>PHASE 3｜車両・保険整備</h2><div class="section-period">7/1 - 8/31</div></div>
+      <div class="task-grid">
+        <div class="task-card" data-cat="vehicle"><div class="task-num" style="background:var(--orange)">24</div><div class="task-info"><h4>車両譲渡契約書の締結（8台分）</h4><p>神奈川エアーメッセンジャー→KAM。譲渡証明書・印鑑証明書の準備</p></div><div class="task-category cat-vehicle">車両</div><div class="task-deadline">7/1-7/15</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="vehicle"><div class="task-num" style="background:var(--orange)">25</div><div class="task-info"><h4>事業用自動車等連絡書の取得</h4><p>関東運輸局へ申請。各車両の車検証情報を転記</p></div><div class="task-category cat-vehicle">車両</div><div class="task-deadline">7/15-7/31</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="vehicle"><div class="task-num" style="background:var(--orange)">26</div><div class="task-info"><h4>車両名義変更＋緑ナンバー取得</h4><p>全8台の移転登録→事業用ナンバー取付。全車完了が運輸開始の前提条件</p></div><div class="task-category cat-vehicle">車両</div><div class="task-deadline">7/15-8/31</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="vehicle"><div class="task-num" style="background:var(--orange)">27</div><div class="task-info"><h4>車検残の確認・必要に応じて車検</h4><p>譲渡車両の車検有効期間確認。期限切れ車両は早期車検</p></div><div class="task-category cat-vehicle">車両</div><div class="task-deadline">7/1-8/31</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="insurance"><div class="task-num" style="background:var(--green)">28</div><div class="task-info"><h4>自動車保険の切替・新規加入</h4><p>対人:神奈川交通共済、対物:損保ジャパン/あいおいで新契約</p></div><div class="task-category cat-insurance">保険</div><div class="task-deadline">7/15-8/31</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="vehicle"><div class="task-num" style="background:var(--orange)">29</div><div class="task-info"><h4>リース契約の承継・新規契約</h4><p>ヤマトリース・Mobilots・トヨタファイナンス等の契約確認</p></div><div class="task-category cat-vehicle">車両</div><div class="task-deadline">7/1-8/15</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="finance"><div class="task-num" style="background:var(--gold)">30</div><div class="task-info"><h4>💎 トラック協会 安全装置導入助成金</h4><p>バックアイカメラ・ドラレコ等の安全装置導入に対する補助。神奈川県ト協経由</p></div><div class="task-category cat-subsidy">助成金</div><div class="task-deadline">7/1-8/31</div><div class="task-status status-todo">予定</div></div>
+      </div>
+    </div>
+
+    <div class="timeline-section animate" style="animation-delay:.45s">
+      <div class="section-header"><div class="section-icon" style="background:var(--pink-light)">💻</div><h2>PHASE 4｜システム・IT導入</h2><div class="section-period">8/1 - 9/30</div></div>
+      <div class="task-grid">
+        <div class="task-card" data-cat="it"><div class="task-num" style="background:var(--pink)">31</div><div class="task-info"><h4>Jinjer人事・給与システムの導入</h4><p>KAM法人としてアカウント開設。就業規則・給与体系の設定</p></div><div class="task-category cat-it">IT</div><div class="task-deadline">8/1-8/31</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="it"><div class="task-num" style="background:var(--pink)">32</div><div class="task-info"><h4>デジタコ（ITP-WebService V3）契約</h4><p>富士通トランストロン契約。デジタコ未搭載車両への搭載も実施</p></div><div class="task-category cat-it">IT</div><div class="task-deadline">8/1-9/15</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="it"><div class="task-num" style="background:var(--pink)">33</div><div class="task-info"><h4>アルコールチェッカー・点呼システム導入</h4><p>法令義務。遠隔点呼対応機器の導入検討</p></div><div class="task-category cat-it">IT</div><div class="task-deadline">8/15-9/30</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="it"><div class="task-num" style="background:var(--pink)">34</div><div class="task-info"><h4>会計ソフト・経費精算の導入</h4><p>弥生会計 or freee等。銀行口座連携・請求書発行機能</p></div><div class="task-category cat-it">IT</div><div class="task-deadline">8/1-8/31</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="finance"><div class="task-num" style="background:var(--gold)">35</div><div class="task-info"><h4>💎 IT導入補助金の申請</h4><p>デジタコ・配車システム・勤怠管理等のIT投資に最大450万円補助</p></div><div class="task-category cat-subsidy">助成金</div><div class="task-deadline">8/1-8/31</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="finance"><div class="task-num" style="background:var(--gold)">36</div><div class="task-info"><h4>💎 トラック輸送省エネ化推進事業</h4><p>デジタコ・EMS導入に対する補助。全ト協経由申請</p></div><div class="task-category cat-subsidy">助成金</div><div class="task-deadline">8/1-9/30</div><div class="task-status status-todo">予定</div></div>
+      </div>
+    </div>
+
+    <div class="timeline-section animate" style="animation-delay:.5s">
+      <div class="section-header"><div class="section-icon" style="background:var(--green-light)">🔧</div><h2>PHASE 5｜運行準備・最終調整</h2><div class="section-period">10/1 - 10/31</div></div>
+      <div class="task-grid">
+        <div class="task-card" data-cat="ops"><div class="task-num" style="background:var(--red)">37</div><div class="task-info"><h4>転籍者の正式入社手続き（7名）</h4><p>社保・雇保の資格取得届提出。制服・名刺・社員証の準備</p></div><div class="task-category cat-ops">運行</div><div class="task-deadline">10/1-10/10</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="ops"><div class="task-num" style="background:var(--red)">38</div><div class="task-info"><h4>運行管理規程の策定</h4><p>点呼記録簿・運転者台帳・運転日報の様式整備</p></div><div class="task-category cat-ops">運行</div><div class="task-deadline">10/1-10/15</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="ops"><div class="task-num" style="background:var(--red)">39</div><div class="task-info"><h4>初任運転者教育の実施</h4><p>安全教育15時間+実車20時間。人材開発支援助成金の対象</p></div><div class="task-category cat-ops">運行</div><div class="task-deadline">10/5-10/20</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="ops"><div class="task-num" style="background:var(--red)">40</div><div class="task-info"><h4>健康診断の実施</h4><p>雇入れ時健診（全転籍者）＋運転者の適性診断受診</p></div><div class="task-category cat-ops">運行</div><div class="task-deadline">10/1-10/20</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="ops"><div class="task-num" style="background:var(--red)">41</div><div class="task-info"><h4>運送契約・荷主との契約締結</h4><p>JPT等との運送委託契約をKAM名義で締結</p></div><div class="task-category cat-ops">運行</div><div class="task-deadline">10/1-10/31</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="ops"><div class="task-num" style="background:var(--red)">42</div><div class="task-info"><h4>試運行・業務リハーサル</h4><p>実際のルートで試験運行。配車→点呼→運行→帰庫のフロー確認</p></div><div class="task-category cat-ops">運行</div><div class="task-deadline">10/20-10/31</div><div class="task-status status-todo">予定</div></div>
+      </div>
+    </div>
+
+    <div class="timeline-section animate" style="animation-delay:.55s">
+      <div class="section-header"><div class="section-icon" style="background:linear-gradient(135deg,var(--primary),var(--purple));color:#fff">🚀</div><h2>PHASE 6｜営業開始</h2><div class="section-period">11/1 〜</div></div>
+      <div class="task-grid">
+        <div class="task-card" data-cat="legal"><div class="task-num" style="background:linear-gradient(135deg,var(--primary),var(--purple))">43</div><div class="task-info"><h4>運輸開始届の提出</h4><p>関東運輸局へ。全車両の緑ナンバー取付完了が前提</p></div><div class="task-category cat-legal">法務</div><div class="task-deadline">11/1</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="ops"><div class="task-num" style="background:linear-gradient(135deg,var(--primary),var(--purple))">44</div><div class="task-info"><h4>本格営業スタート</h4><p>KAM株式会社として一般貨物運送事業を正式に開始</p></div><div class="task-category cat-ops">運行</div><div class="task-deadline">11/1</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="legal"><div class="task-num" style="background:linear-gradient(135deg,var(--primary),var(--purple))">45</div><div class="task-info"><h4>運賃料金設定届の提出</h4><p>運輸開始後30日以内に運輸支局へ</p></div><div class="task-category cat-legal">法務</div><div class="task-deadline">11/1-11/30</div><div class="task-status status-todo">予定</div></div>
+        <div class="task-card" data-cat="finance"><div class="task-num" style="background:linear-gradient(135deg,var(--primary),var(--purple))">46</div><div class="task-info"><h4>💎 小規模事業者持続化補助金の申請</h4><p>販路開拓・HP作成等に最大250万円。補助率2/3</p></div><div class="task-category cat-subsidy">助成金</div><div class="task-deadline">11月〜</div><div class="task-status status-todo">予定</div></div>
+      </div>
+    </div>
+
+  </div><!-- /overview -->
+
+  <!-- ===== SUBSIDY STRATEGY ===== -->
+  <div id="tab-subsidy-strategy" class="tab-content">
+    <div class="subsidy-overview">
+      <h3>🎯 KAM株式会社 助成金・補助金 最大活用戦略</h3>
+      <div class="sub-desc">就業規則の設計段階から助成金の受給要件を逆算して組み込むことで、追加コストをほぼかけずに最大限の助成金を獲得する戦略です。「定年60歳未満からの段階的引上げ」と「育児休業規則の拡充」が2本の柱です。</div>
+      <div class="subsidy-total-bar">
+        <div>
+          <div class="total-label">助成金見込み総額（最大値ベース）</div>
+          <div class="total-value">約2,500万円以上</div>
+        </div>
+        <div class="total-note">※条件達成状況により変動。社労士と連携して確実に獲得</div>
+      </div>
+    </div>
+
+    <div class="strategy-box">
+      <h3>🏗️ 戦略① 定年引上げによる助成金ロードマップ</h3>
+      <div class="strategy-steps">
+        <div class="strategy-step">
+          <div class="step-num">STEP 1 | 4-5月</div>
+          <h4>就業規則で定年60歳未満に設定</h4>
+          <p>KAMの就業規則を「定年59歳」で作成・労基署届出。これが助成金の「旧定年」の基準になる</p>
+          <div class="step-amount">コスト: 0円</div>
+        </div>
+        <div class="strategy-step">
+          <div class="step-num">STEP 2 | 6月</div>
+          <h4>定年65歳に引上げ</h4>
+          <p>就業規則を変更→労基署再届出。65歳超雇用推進助成金（65歳超継続雇用促進コース）を申請</p>
+          <div class="step-amount">→ 15〜30万円</div>
+        </div>
+        <div class="strategy-step">
+          <div class="step-num">STEP 3 | 翌年度以降</div>
+          <h4>70歳以上 or 定年廃止</h4>
+          <p>段階的に定年をさらに引上げ or 廃止。対象被保険者数に応じて大幅受給</p>
+          <div class="step-amount">→ 30〜160万円</div>
+        </div>
+        <div class="strategy-step">
+          <div class="step-num">補完</div>
+          <h4>高年齢者雇用管理改善</h4>
+          <p>高年齢者評価制度等雇用管理改善コースも並行活用。賃金・人事制度整備で経費の60%補助</p>
+          <div class="step-amount">→ 最大60万円</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="strategy-box" style="border-color:var(--pink);">
+      <h3 style="color:var(--pink);">👶 戦略② 育児・介護休業規則の拡充による助成金</h3>
+      <div class="strategy-steps">
+        <div class="strategy-step">
+          <div class="step-num">準備 | 4-5月</div>
+          <h4>法定以上の育休制度を整備</h4>
+          <p>パパ育休の周知義務化対応・看護休暇の有給化・育休中の代替要員確保計画</p>
+          <div class="step-amount">コスト: 0円</div>
+        </div>
+        <div class="strategy-step">
+          <div class="step-num">申請① | 育休取得時</div>
+          <h4>育児休業等支援コース</h4>
+          <p>男性育休取得者が出た場合：休業取得時28.5万円＋職場復帰時28.5万円</p>
+          <div class="step-amount">→ 57万円/人</div>
+        </div>
+        <div class="strategy-step">
+          <div class="step-num">申請② | 代替要員</div>
+          <h4>育休中等業務代替支援コース</h4>
+          <p>育休中の代替要員確保・業務体制整備に対する助成</p>
+          <div class="step-amount">→ 最大140万円</div>
+        </div>
+        <div class="strategy-step">
+          <div class="step-num">申請③ | パパ育休</div>
+          <h4>出生時両立支援コース</h4>
+          <p>男性労働者の育児休業取得を支援。中小企業は最大57万円</p>
+          <div class="step-amount">→ 最大57万円</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="notes-card">
+      <h3>⚠️ 助成金申請の鉄則</h3>
+      <div class="note-item"><div class="note-icon" style="background:var(--red-light)">🚨</div><div class="note-text"><strong>「事前申請」が絶対条件</strong> — ほぼ全ての助成金は「取り組みを実施する前に計画届を提出」しないと受給不可。後からの申請は原則不可能。社労士と連携して漏れなく事前申請を行うこと。</div></div>
+      <div class="note-item"><div class="note-icon" style="background:var(--orange-light)">📋</div><div class="note-text"><strong>就業規則の「旧版」を残しておく</strong> — 定年引上げ助成金は「変更前の就業規則」と「変更後の就業規則」の両方が必要。変更前の届出済コピーを必ず保管すること。</div></div>
+      <div class="note-item"><div class="note-icon" style="background:var(--green-light)">💰</div><div class="note-text"><strong>複数助成金の併給は可能だが注意</strong> — 同一の取組に対して複数の助成金を受給することはできないが、別々の取組であれば併給可能。社労士に確認しながら最大化すること。</div></div>
+      <div class="note-item"><div class="note-icon" style="background:var(--primary-light)">📊</div><div class="note-text"><strong>労働関係書類の整備が前提</strong> — 出勤簿・賃金台帳・労働者名簿の3帳簿が整備されていないと不支給。Jinjer導入で早期にデジタル化すること。</div></div>
+    </div>
+  </div>
+
+  <!-- ===== SUBSIDY LIST ===== -->
+  <div id="tab-subsidy-list" class="tab-content">
+    <div class="subsidy-overview">
+      <h3>💰 活用可能な助成金・補助金 全18件</h3>
+      <div class="subsidy-total-bar">
+        <div>
+          <div class="total-label">最大受給可能額（全件合計）</div>
+          <div class="total-value">約2,500万円+</div>
+        </div>
+        <div class="total-note">※各制度の上限額合計。実際の受給額は条件により変動</div>
+      </div>
+    </div>
+
+    <div class="subsidy-cat-title" style="border-color:var(--green);">🏢 雇用・人事系助成金（厚生労働省）</div>
+    <div class="subsidy-grid">
+      <div class="subsidy-card cat-a">
+        <div class="s-header"><div class="s-icon" style="background:var(--green-light)">👴</div><h4>65歳超雇用推進助成金<br>（65歳超継続雇用促進コース）</h4></div>
+        <div class="s-amount" style="color:var(--green)">15〜160万円</div>
+        <div class="s-desc">定年引上げ・定年廃止・継続雇用制度の導入を行った事業主に助成。60歳以上の被保険者数と引上げ幅で金額が変動。</div>
+        <div class="s-strategy"><strong>🎯 KAM戦略:</strong> 定年59歳→65歳引上げで申請。営業開始後さらに70歳以上へ引上げ or 定年廃止で追加受給</div>
+        <div><span class="s-tag" style="background:var(--green-light);color:var(--green);">PHASE 2で申請</span><span class="s-phase">事前の就業規則整備必須</span></div>
+      </div>
+      <div class="subsidy-card cat-a">
+        <div class="s-header"><div class="s-icon" style="background:var(--cyan-light)">💼</div><h4>キャリアアップ助成金<br>（正社員化コース）</h4></div>
+        <div class="s-amount" style="color:var(--cyan)">最大80万円/人</div>
+        <div class="s-desc">有期雇用→正社員化、賃金引上げ等。転籍者が有期契約から正社員化する場合に該当。</div>
+        <div class="s-strategy"><strong>🎯 KAM戦略:</strong> 転籍者を一旦有期で受入れ→正社員化、または賃金改定で申請。計画届は転籍前に提出必須</div>
+        <div><span class="s-tag" style="background:var(--cyan-light);color:var(--cyan);">PHASE 2で計画届</span><span class="s-phase">80万円×人数</span></div>
+      </div>
+      <div class="subsidy-card cat-a">
+        <div class="s-header"><div class="s-icon" style="background:var(--pink-light)">👶</div><h4>両立支援等助成金<br>（育児休業等支援コース）</h4></div>
+        <div class="s-amount" style="color:var(--pink)">最大57万円/人</div>
+        <div class="s-desc">育休取得時28.5万円＋職場復帰時28.5万円。生産性要件を満たせば各36万円に増額。</div>
+        <div class="s-strategy"><strong>🎯 KAM戦略:</strong> 育休規程を法定以上に整備。対象者が出た際に確実に受給できる体制を構築</div>
+        <div><span class="s-tag" style="background:var(--pink-light);color:var(--pink);">PHASE 1で規程整備</span><span class="s-phase">対象者発生時に申請</span></div>
+      </div>
+      <div class="subsidy-card cat-a">
+        <div class="s-header"><div class="s-icon" style="background:var(--pink-light)">👨‍👧</div><h4>両立支援等助成金<br>（出生時両立支援コース）</h4></div>
+        <div class="s-amount" style="color:var(--pink)">最大57万円</div>
+        <div class="s-desc">男性労働者の育児休業取得を促進。中小企業事業主が対象。</div>
+        <div class="s-strategy"><strong>🎯 KAM戦略:</strong> パパ育休の取得しやすい職場環境整備。配車調整で対応可能</div>
+        <div><span class="s-tag" style="background:var(--pink-light);color:var(--pink);">規程整備後</span><span class="s-phase">男性育休取得時</span></div>
+      </div>
+      <div class="subsidy-card cat-a">
+        <div class="s-header"><div class="s-icon" style="background:var(--pink-light)">🔄</div><h4>両立支援等助成金<br>（育休中等業務代替支援コース）</h4></div>
+        <div class="s-amount" style="color:var(--pink)">最大140万円</div>
+        <div class="s-desc">育休中の業務代替体制を整備した場合の助成。手当支給等（育児休業）で最大140万円。</div>
+        <div class="s-strategy"><strong>🎯 KAM戦略:</strong> 育休取得者の業務を他のドライバーでカバーする体制＋手当支給で申請</div>
+        <div><span class="s-tag" style="background:var(--pink-light);color:var(--pink);">体制構築後</span><span class="s-phase">代替実績発生時</span></div>
+      </div>
+      <div class="subsidy-card cat-a">
+        <div class="s-header"><div class="s-icon" style="background:var(--purple-light)">📚</div><h4>人材開発支援助成金</h4></div>
+        <div class="s-amount" style="color:var(--purple)">経費の最大75%</div>
+        <div class="s-desc">従業員の職業訓練・研修費用を助成。運行管理者講習・安全運転教育・フォークリフト資格等に活用。</div>
+        <div class="s-strategy"><strong>🎯 KAM戦略:</strong> 初任運転者教育35時間を助成対象として申請。訓練計画の事前届出が必須</div>
+        <div><span class="s-tag" style="background:var(--purple-light);color:var(--purple);">PHASE 2で計画届</span><span class="s-phase">PHASE 5で訓練実施</span></div>
+      </div>
+      <div class="subsidy-card cat-a">
+        <div class="s-header"><div class="s-icon" style="background:var(--green-light)">👴</div><h4>65歳超雇用推進助成金<br>（高年齢者評価制度等雇用管理改善）</h4></div>
+        <div class="s-amount" style="color:var(--green)">経費の60%（最大60万円）</div>
+        <div class="s-desc">高年齢者向けの雇用管理制度の整備（賃金制度・健康管理制度等）に対する助成。</div>
+        <div class="s-strategy"><strong>🎯 KAM戦略:</strong> 定年引上げと合わせて高齢ドライバー向け賃金制度・健康管理制度を整備</div>
+        <div><span class="s-tag" style="background:var(--green-light);color:var(--green);">PHASE 2以降</span></div>
+      </div>
+      <div class="subsidy-card cat-a">
+        <div class="s-header"><div class="s-icon" style="background:var(--cyan-light)">🤝</div><h4>特定求職者雇用開発助成金<br>（特定就職困難者コース）</h4></div>
+        <div class="s-amount" style="color:var(--cyan)">最大240万円/人</div>
+        <div class="s-desc">高齢者・障害者等の就職困難者を雇い入れた場合の助成。ハローワーク経由の紹介が条件。</div>
+        <div class="s-strategy"><strong>🎯 KAM戦略:</strong> 今後の増員時にハローワーク経由で60歳以上のドライバーを採用する際に活用</div>
+        <div><span class="s-tag" style="background:var(--cyan-light);color:var(--cyan);">増員時に活用</span></div>
+      </div>
+      <div class="subsidy-card cat-a">
+        <div class="s-header"><div class="s-icon" style="background:var(--green-light)">👴</div><h4>65歳超雇用推進助成金<br>（高年齢者無期雇用転換コース）</h4></div>
+        <div class="s-amount" style="color:var(--green)">最大60万円/人</div>
+        <div class="s-desc">50歳以上かつ定年年齢未満の有期契約労働者を無期雇用に転換した場合の助成。</div>
+        <div class="s-strategy"><strong>🎯 KAM戦略:</strong> 臨時雇用のドライバーを無期転換する際に活用可能</div>
+        <div><span class="s-tag" style="background:var(--green-light);color:var(--green);">該当者発生時</span></div>
+      </div>
+    </div>
+
+    <div class="subsidy-cat-title" style="border-color:var(--primary);">⏰ 働き方改革系助成金</div>
+    <div class="subsidy-grid">
+      <div class="subsidy-card cat-b">
+        <div class="s-header"><div class="s-icon" style="background:var(--primary-light)">⏰</div><h4>働き方改革推進支援助成金<br>（労働時間短縮・年休促進支援コース）</h4></div>
+        <div class="s-amount" style="color:var(--primary)">最大200万円</div>
+        <div class="s-desc">改善基準告示対応のための機器導入（デジタコ等）、就業規則整備、コンサル費用等に助成。</div>
+        <div class="s-strategy"><strong>🎯 KAM戦略:</strong> デジタコ導入費用＋就業規則整備費用の一部を補助。PHASE 2で申請</div>
+        <div><span class="s-tag" style="background:var(--primary-light);color:var(--primary);">PHASE 2で申請</span><span class="s-phase">年度内に取組完了</span></div>
+      </div>
+      <div class="subsidy-card cat-b">
+        <div class="s-header"><div class="s-icon" style="background:var(--primary-light)">💹</div><h4>業務改善助成金</h4></div>
+        <div class="s-amount" style="color:var(--primary)">最大600万円</div>
+        <div class="s-desc">事業場内最低賃金を30円以上引上げ＋生産性向上設備投資に対する助成。</div>
+        <div class="s-strategy"><strong>🎯 KAM戦略:</strong> 転籍者の賃金を旧社より30円/h以上アップ＋配車システム等の設備投資で申請</div>
+        <div><span class="s-tag" style="background:var(--primary-light);color:var(--primary);">PHASE 2で申請</span><span class="s-phase">通年申請可</span></div>
+      </div>
+      <div class="subsidy-card cat-b">
+        <div class="s-header"><div class="s-icon" style="background:var(--purple-light)">🏠</div><h4>人材確保等支援助成金<br>（テレワークコース）</h4></div>
+        <div class="s-amount" style="color:var(--purple)">最大100万円</div>
+        <div class="s-desc">テレワーク制度導入に伴う機器等の費用。補助率50%。事務職の在宅勤務導入に。</div>
+        <div class="s-strategy"><strong>🎯 KAM戦略:</strong> 事務所スタッフ（和田さん等）のテレワーク環境整備に活用可能</div>
+        <div><span class="s-tag" style="background:var(--purple-light);color:var(--purple);">PHASE 4以降</span></div>
+      </div>
+    </div>
+
+    <div class="subsidy-cat-title" style="border-color:var(--orange);">🚛 運送業・トラック協会系補助金</div>
+    <div class="subsidy-grid">
+      <div class="subsidy-card cat-c">
+        <div class="s-header"><div class="s-icon" style="background:var(--orange-light)">📟</div><h4>トラック輸送省エネ化推進事業</h4></div>
+        <div class="s-amount" style="color:var(--orange)">車両価格の1/3</div>
+        <div class="s-desc">デジタコ・EMS車載機の導入、エコタイヤ、低燃費車両への代替に対する補助。全ト協経由。</div>
+        <div class="s-strategy"><strong>🎯 KAM戦略:</strong> 全車両のデジタコ搭載・EMS導入費用の一部を補助。神奈川県ト協に要問合せ</div>
+        <div><span class="s-tag" style="background:var(--orange-light);color:var(--orange);">PHASE 4で申請</span></div>
+      </div>
+      <div class="subsidy-card cat-c">
+        <div class="s-header"><div class="s-icon" style="background:var(--orange-light)">📷</div><h4>安全装置等導入促進助成事業</h4></div>
+        <div class="s-amount" style="color:var(--orange)">機器代の一部</div>
+        <div class="s-desc">バックアイカメラ・側方衝突監視警報装置・ドラレコ・アルコールインターロック装置等の導入助成。</div>
+        <div class="s-strategy"><strong>🎯 KAM戦略:</strong> 全車両への安全装置装着時に申請。神奈川県ト協の窓口で確認</div>
+        <div><span class="s-tag" style="background:var(--orange-light);color:var(--orange);">PHASE 3-4</span></div>
+      </div>
+      <div class="subsidy-card cat-c">
+        <div class="s-header"><div class="s-icon" style="background:var(--orange-light)">🔋</div><h4>低炭素型ディーゼルトラック<br>普及加速化事業</h4></div>
+        <div class="s-amount" style="color:var(--orange)">車両価格の一部</div>
+        <div class="s-desc">最新規制適合車への代替促進。将来の車両更新時に活用可能。</div>
+        <div class="s-strategy"><strong>🎯 KAM戦略:</strong> 今後の車両更新時（老朽化車両の買替時）に活用</div>
+        <div><span class="s-tag" style="background:var(--orange-light);color:var(--orange);">車両更新時</span></div>
+      </div>
+    </div>
+
+    <div class="subsidy-cat-title" style="border-color:var(--pink);">💻 IT・経営支援系補助金</div>
+    <div class="subsidy-grid">
+      <div class="subsidy-card cat-d">
+        <div class="s-header"><div class="s-icon" style="background:var(--pink-light)">🖥️</div><h4>IT導入補助金</h4></div>
+        <div class="s-amount" style="color:var(--pink)">最大450万円</div>
+        <div class="s-desc">配車管理システム・勤怠管理・デジタコ等のIT投資に。補助率1/2〜2/3。通常枠・デジタル化基盤導入枠あり。</div>
+        <div class="s-strategy"><strong>🎯 KAM戦略:</strong> Jinjer＋デジタコ＋配車システムをまとめて申請。PHASE 4で導入</div>
+        <div><span class="s-tag" style="background:var(--pink-light);color:var(--pink);">PHASE 4で申請</span><span class="s-phase">公募時期要確認</span></div>
+      </div>
+      <div class="subsidy-card cat-d">
+        <div class="s-header"><div class="s-icon" style="background:var(--pink-light)">📢</div><h4>小規模事業者持続化補助金</h4></div>
+        <div class="s-amount" style="color:var(--pink)">最大250万円</div>
+        <div class="s-desc">販路開拓・業務効率化の取組に補助率2/3。HP作成・チラシ・展示会出展等にも活用可能。</div>
+        <div class="s-strategy"><strong>🎯 KAM戦略:</strong> 営業開始後にHP作成・営業ツール作成に活用</div>
+        <div><span class="s-tag" style="background:var(--pink-light);color:var(--pink);">PHASE 6以降</span></div>
+      </div>
+      <div class="subsidy-card cat-d">
+        <div class="s-header"><div class="s-icon" style="background:var(--primary-light)">🏦</div><h4>日本政策金融公庫<br>新規開業資金</h4></div>
+        <div class="s-amount" style="color:var(--primary)">最大7,200万円</div>
+        <div class="s-desc">新事業開始への低金利融資。設備資金・運転資金。据置期間2年以内。</div>
+        <div class="s-strategy"><strong>🎯 KAM戦略:</strong> 初期投資（車両整備・IT導入等）の運転資金として申込検討</div>
+        <div><span class="s-tag" style="background:var(--primary-light);color:var(--primary);">随時申込可</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SUBSIDY SCHEDULE ===== -->
+  <div id="tab-subsidy-schedule" class="tab-content">
+    <div class="gantt-container">
+      <h3>📅 助成金・補助金 申請スケジュール（2026年4月〜11月）</h3>
+      <table class="gantt-table">
+        <thead><tr><th>助成金名</th><th>4月</th><th>5月</th><th>6月</th><th>7月</th><th>8月</th><th>9月</th><th>10月</th><th>11月</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:700;color:var(--text-dark)">📋 就業規則（定年59歳版）作成</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:linear-gradient(90deg,var(--cyan),var(--primary));left:0;width:25%;"></div></td></tr>
+          <tr><td style="font-weight:700;color:var(--text-dark)">📋 就業規則変更（定年65歳へ）</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:var(--green);left:25%;width:6.25%;"></div></td></tr>
+          <tr><td>💎 65歳超雇用推進助成金</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:linear-gradient(90deg,var(--green-light),var(--green));left:25%;width:25%;opacity:.8;"></div></td></tr>
+          <tr><td>💎 キャリアアップ助成金（計画届）</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:var(--cyan);left:25%;width:6.25%;"></div></td></tr>
+          <tr><td>💎 両立支援等助成金（準備）</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:var(--pink);left:0;width:25%;"></div></td></tr>
+          <tr><td>💎 働き方改革推進支援助成金</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:var(--primary);left:25%;width:12.5%;"></div></td></tr>
+          <tr><td>💎 業務改善助成金</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:var(--primary);left:25%;width:12.5%;"></div></td></tr>
+          <tr><td>💎 人材開発支援助成金（計画届）</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:var(--purple);left:25%;width:12.5%;"></div></td></tr>
+          <tr><td>💎 人材開発支援助成金（訓練実施）</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:linear-gradient(90deg,var(--purple-light),var(--purple));left:75%;width:12.5%;"></div></td></tr>
+          <tr><td>💎 トラック協会 安全装置助成</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:var(--orange);left:37.5%;width:25%;"></div></td></tr>
+          <tr><td>💎 トラック輸送省エネ化事業</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:var(--orange);left:50%;width:25%;"></div></td></tr>
+          <tr><td>💎 IT導入補助金</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:var(--pink);left:50%;width:25%;"></div></td></tr>
+          <tr><td>💎 小規模事業者持続化補助金</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:var(--pink);left:87.5%;width:12.5%;"></div></td></tr>
+          <tr><td style="font-weight:800;color:var(--gold)">💰 受給見込みタイミング</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:linear-gradient(90deg,var(--gold-light),var(--gold));left:50%;width:50%;border-radius:8px;opacity:.6;"></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="notes-card">
+      <h3>📌 申請の優先順位</h3>
+      <div class="note-item"><div class="note-icon" style="background:var(--red-light)">1️⃣</div><div class="note-text"><strong>最優先（4月中に着手）</strong> — 社労士顧問契約 → 就業規則作成（定年59歳・育休拡充）→ 労働保険・社会保険加入</div></div>
+      <div class="note-item"><div class="note-icon" style="background:var(--orange-light)">2️⃣</div><div class="note-text"><strong>第2優先（6月中に申請）</strong> — 65歳超雇用推進助成金 / キャリアアップ助成金計画届 / 働き方改革推進支援助成金 / 業務改善助成金 / 人材開発支援助成金計画届</div></div>
+      <div class="note-item"><div class="note-icon" style="background:var(--green-light)">3️⃣</div><div class="note-text"><strong>第3優先（8-9月に申請）</strong> — IT導入補助金 / トラック協会系補助金 / トラック輸送省エネ化事業</div></div>
+      <div class="note-item"><div class="note-icon" style="background:var(--primary-light)">4️⃣</div><div class="note-text"><strong>営業開始後</strong> — 小規模事業者持続化補助金 / 特定求職者雇用開発助成金（増員時）/ 定年さらに引上げ</div></div>
+    </div>
+  </div>
+
+  <!-- ===== TIMELINE (All Tasks) ===== -->
+  <div id="tab-timeline" class="tab-content">
+    <div style="margin-bottom:20px;">
+      <div class="pills">
+        <button class="pill active" onclick="filterCat('all',this)">すべて</button>
+        <button class="pill" onclick="filterCat('legal',this)">⚖️ 法務</button>
+        <button class="pill" onclick="filterCat('labor',this)">👥 人事</button>
+        <button class="pill" onclick="filterCat('vehicle',this)">🚛 車両</button>
+        <button class="pill" onclick="filterCat('insurance',this)">🛡️ 保険</button>
+        <button class="pill" onclick="filterCat('finance',this)">💰 財務</button>
+        <button class="pill" onclick="filterCat('it',this)">💻 IT</button>
+        <button class="pill" onclick="filterCat('ops',this)">🔧 運行</button>
+      </div>
+    </div>
+    <div id="filtered-tasks" class="task-grid"></div>
+  </div>
+
+  <!-- ===== GANTT ===== -->
+  <div id="tab-gantt" class="tab-content">
+    <div class="gantt-container">
+      <h3>📅 ガントチャート（2026年4月〜11月）</h3>
+      <table class="gantt-table">
+        <thead><tr><th>カテゴリ / タスク</th><th>4月</th><th>5月</th><th>6月</th><th>7月</th><th>8月</th><th>9月</th><th>10月</th><th>11月</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:800;color:var(--purple)">⚖️ 法務・定款</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:linear-gradient(90deg,var(--purple-light),var(--purple));opacity:.6;left:0;width:25%;"></div></td></tr>
+          <tr><td>&nbsp;&nbsp;定款変更・登記</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:var(--purple);left:0;width:20%;"></div></td></tr>
+          <tr><td style="font-weight:800;color:var(--cyan)">👥 人事・労務</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:linear-gradient(90deg,var(--cyan-light),var(--cyan));opacity:.6;left:0;width:75%;"></div></td></tr>
+          <tr><td>&nbsp;&nbsp;就業規則（定年59歳版）作成</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:var(--cyan);left:0;width:25%;"></div></td></tr>
+          <tr><td>&nbsp;&nbsp;定年65歳引上げ + 届出</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:var(--green);left:25%;width:8%;"></div></td></tr>
+          <tr><td>&nbsp;&nbsp;育休・介護休業規程整備</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:var(--pink);left:0;width:25%;"></div></td></tr>
+          <tr><td>&nbsp;&nbsp;転籍手続き全般</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:var(--cyan);left:25%;width:50%;"></div></td></tr>
+          <tr><td style="font-weight:800;color:var(--orange)">🚛 車両関連</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:linear-gradient(90deg,var(--orange-light),var(--orange));opacity:.6;left:37.5%;width:25%;"></div></td></tr>
+          <tr><td>&nbsp;&nbsp;譲渡・名義変更・緑ナンバー</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:var(--orange);left:37.5%;width:25%;"></div></td></tr>
+          <tr><td style="font-weight:800;color:var(--green)">🛡️ 保険</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:linear-gradient(90deg,var(--green-light),var(--green));opacity:.6;left:0;width:62.5%;"></div></td></tr>
+          <tr><td style="font-weight:800;color:var(--gold)">💎 助成金申請</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:linear-gradient(90deg,var(--gold-light),var(--gold));opacity:.6;left:25%;width:50%;"></div></td></tr>
+          <tr><td>&nbsp;&nbsp;雇用系助成金</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:var(--gold);left:25%;width:25%;"></div></td></tr>
+          <tr><td>&nbsp;&nbsp;IT系補助金</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:var(--gold);left:50%;width:25%;"></div></td></tr>
+          <tr><td style="font-weight:800;color:var(--pink)">💻 IT・システム</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:linear-gradient(90deg,var(--pink-light),var(--pink));opacity:.6;left:50%;width:25%;"></div></td></tr>
+          <tr><td style="font-weight:800;color:var(--red)">🔧 運行準備</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:linear-gradient(90deg,var(--red-light),var(--red));opacity:.6;left:75%;width:12.5%;"></div></td></tr>
+          <tr><td style="font-weight:800;background:linear-gradient(135deg,var(--primary),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">🚀 営業開始</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:linear-gradient(90deg,var(--primary),var(--purple));left:87.5%;width:12.5%;"></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== TRANSFER ===== -->
+  <div id="tab-transfer" class="tab-content">
+    <div class="detail-grid">
+      <div class="detail-card">
+        <h3>👥 転籍予定者一覧（7名）</h3>
+        <table class="detail-table">
+          <thead><tr><th>氏名</th><th>フリガナ</th><th>備考</th></tr></thead>
+          <tbody>
+            <tr><td>和田 將志</td><td>ワダ マサシ</td><td>事務所勤務</td></tr>
+            <tr><td>佐藤 剛史</td><td>サトウ タケシ</td><td>月・土＋シフト</td></tr>
+            <tr><td>金坂 登志</td><td>カネサカ トシ</td><td>土・日＋シフト</td></tr>
+            <tr><td>田辺 義明</td><td>タナベ ヨシアキ</td><td>日・月</td></tr>
+            <tr><td>関谷 政江</td><td>セキヤ マサエ</td><td>金・土＋シフト</td></tr>
+            <tr><td>遊佐 亜子</td><td>ユサ アコ</td><td>日・水・木</td></tr>
+            <tr><td>小清水 誠</td><td>コシミズ マコト</td><td>ドライバー</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="detail-card">
+        <h3>🚛 譲渡対象車両一覧（8台）</h3>
+        <table class="detail-table">
+          <thead><tr><th>No</th><th>車名</th><th>登録番号</th><th>種別</th></tr></thead>
+          <tbody>
+            <tr><td>2</td><td>マツダ</td><td>横浜 400あ9222</td><td>1BOX</td></tr>
+            <tr><td>3</td><td>マツダ</td><td>横浜 400あ9179</td><td>1BOX</td></tr>
+            <tr><td>12</td><td>トヨタ</td><td>横浜 400あ9040</td><td>1BOX</td></tr>
+            <tr><td>13</td><td>トヨタ</td><td>横浜 400あ6314</td><td>1BOX</td></tr>
+            <tr><td>19</td><td>トヨタ</td><td>横浜 400あ8997</td><td>1BOX</td></tr>
+            <tr><td>29</td><td>ニッサン</td><td>横浜 400あ8411</td><td>1BOX</td></tr>
+            <tr><td>42</td><td>トヨタ</td><td>横浜 480う5301</td><td>1BOX</td></tr>
+            <tr><td>43</td><td>マツダ</td><td>横浜 400あ8411</td><td>1BOX</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== NOTES ===== -->
+  <div id="tab-notes" class="tab-content">
+    <div class="notes-card">
+      <h3>⚠️ 重要な注意事項・リスク</h3>
+      <div class="note-item"><div class="note-icon" style="background:var(--red-light)">🚨</div><div class="note-text"><strong>改善基準告示への対応が必須</strong> — 1日拘束は原則13時間・上限15時間、月284時間（最大310時間）、年3,300時間。違反で罰則あり。就業規則に反映すること。</div></div>
+      <div class="note-item"><div class="note-icon" style="background:var(--orange-light)">⚡</div><div class="note-text"><strong>許可後1年以内に運輸開始</strong> — 許可取得後1年以内に運輸開始しないと許可失効の可能性あり。</div></div>
+      <div class="note-item"><div class="note-icon" style="background:var(--purple-light)">📜</div><div class="note-text"><strong>2026年 貨物自動車運送事業法改正</strong> — 終身許可制→5年ごと更新制へ変更。荷主・運送者への新責任規定も追加。</div></div>
+      <div class="note-item"><div class="note-icon" style="background:var(--gold-light)">💎</div><div class="note-text"><strong>助成金は「事前申請」がカギ</strong> — キャリアアップ・人材開発等は計画届の事前提出が必須。後からは不可。</div></div>
+      <div class="note-item"><div class="note-icon" style="background:var(--cyan-light)">🔑</div><div class="note-text"><strong>デジタコ未搭載車両への対応</strong> — No.2（マツダ 400あ9222）にデジタコ未搭載。営業開始前に全車搭載完了すること。</div></div>
+      <div class="note-item"><div class="note-icon" style="background:var(--primary-light)">👥</div><div class="note-text"><strong>最低5名の正規ドライバーが必要</strong> — 転籍7名で条件は満たすが、退職リスクに備え採用計画も準備。</div></div>
+      <div class="note-item"><div class="note-icon" style="background:var(--green-light)">📋</div><div class="note-text"><strong>就業規則の変更前版を保管</strong> — 定年引上げ助成金の申請時に「変更前」と「変更後」の両方が必要。労基署届出済みの旧版コピーを必ず保管。</div></div>
+    </div>
+    <div class="notes-card">
+      <h3>📞 相談先リスト</h3>
+      <div class="note-item"><div class="note-icon" style="background:var(--primary-light)">🏛️</div><div class="note-text"><strong>関東運輸局 神奈川運輸支局</strong> — 車両登録・運輸開始届・運行管理者届出等</div></div>
+      <div class="note-item"><div class="note-icon" style="background:var(--green-light)">🏛️</div><div class="note-text"><strong>横浜東年金事務所</strong> — 社会保険の新規適用届・資格取得届</div></div>
+      <div class="note-item"><div class="note-icon" style="background:var(--cyan-light)">🏛️</div><div class="note-text"><strong>ハローワーク横浜</strong> — 雇用保険・各種助成金申請窓口</div></div>
+      <div class="note-item"><div class="note-icon" style="background:var(--orange-light)">🏛️</div><div class="note-text"><strong>横浜北労働基準監督署</strong> — 就業規則届出・36協定・労災保険</div></div>
+      <div class="note-item"><div class="note-icon" style="background:var(--purple-light)">🏛️</div><div class="note-text"><strong>神奈川県トラック協会</strong> — 各種補助金・モデル就業規則・適正化事業</div></div>
+      <div class="note-item"><div class="note-icon" style="background:var(--gold-light)">🏛️</div><div class="note-text"><strong>JEED（高齢・障害・求職者雇用支援機構）</strong> — 65歳超雇用推進助成金の申請窓口</div></div>
+      <div class="note-item"><div class="note-icon" style="background:var(--red-light)">👨‍⚖️</div><div class="note-text"><strong>社会保険労務士（早期に顧問契約推奨）</strong> — 就業規則作成・全助成金の申請代行・転籍手続き</div></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showTab(tab, el) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (el) el.classList.add('active');
+}
+
+function filterCat(cat, btn) {
+  if (btn) {
+    btn.parentElement.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  document.querySelectorAll('.task-card').forEach(card => {
+    card.style.display = (cat === 'all' || card.dataset.cat === cat) ? '' : 'none';
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const allCards = document.querySelectorAll('#tab-overview .task-card');
+  const container = document.getElementById('filtered-tasks');
+  allCards.forEach(card => { container.appendChild(card.cloneNode(true)); });
+});
+</script>
+</body>
+</html>
