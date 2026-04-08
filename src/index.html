@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1400">
+<title>KAM事業譲渡プロジェクトダッシュボード</title>
+<style>
+:root{--bg:#F0F4FF;--white:#FFF;--border:#D6E0F0;--text-dark:#1A2341;--text-mid:#4A5578;--text-light:#8B95B0;--primary:#4F6AE8;--primary-light:#EBF0FF;--green:#22C993;--green-light:#E6FAF2;--red:#F0605D;--red-light:#FFF0EF;--orange:#F5A623;--orange-light:#FFF8EB;--purple:#9B6BF7;--purple-light:#F3EEFF;--cyan:#17C5D6;--cyan-light:#E4FAFB;--pink:#E96DB0;--pink-light:#FFF0F8;--gold:#D4A843;--gold-light:#FFF9EB;--shadow-sm:0 2px 8px rgba(79,106,232,.06);--shadow-md:0 8px 24px rgba(79,106,232,.10);--radius:18px;--radius-sm:12px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text-dark)}
+.sidebar{position:fixed;left:0;top:0;width:280px;height:100vh;background:linear-gradient(180deg,#FFF,#F7F9FF);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100}
+.sidebar-logo{padding:28px 24px 24px;display:flex;align-items:center;gap:14px}
+.sidebar-logo .icon{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,#4F6AE8,#9B6BF7);display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;font-weight:800;box-shadow:0 4px 12px rgba(79,106,232,.3)}
+.sidebar-logo span{font-size:22px;font-weight:800;background:linear-gradient(135deg,var(--primary),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sidebar-nav{flex:1;padding:0 16px;overflow-y:auto}
+.nav-label{font-size:10px;font-weight:800;color:var(--text-light);text-transform:uppercase;letter-spacing:1.5px;padding:18px 14px 8px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;cursor:pointer;transition:all .25s;font-size:13.5px;font-weight:500;color:var(--text-mid);margin-bottom:2px}
+.nav-item:hover{background:var(--primary-light);color:var(--primary);transform:translateX(2px)}
+.nav-item.active{background:var(--primary-light);color:var(--primary);font-weight:700;box-shadow:inset 3px 0 0 var(--primary)}
+.nav-item .emoji{font-size:17px;width:24px;text-align:center}
+.nav-item .badge{margin-left:auto;font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px}
+.badge-green{background:var(--green-light);color:var(--green)}
+.badge-gold{background:var(--gold-light);color:var(--gold)}
+.badge-red{background:var(--red-light);color:var(--red)}
+.sidebar-cta{margin:16px;padding:22px;border-radius:16px;background:linear-gradient(135deg,#4F6AE8,#9B6BF7,#E96DB0);color:#fff;box-shadow:0 8px 24px rgba(79,106,232,.25)}
+.sidebar-cta h4{font-size:15px;font-weight:800;margin-bottom:8px}
+.sidebar-cta p{font-size:12px;opacity:.9;line-height:1.6}
+.sidebar-user{padding:18px 22px;border-top:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.sidebar-user .avatar{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--cyan),var(--primary));display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:700}
+.sidebar-user .info .name{font-size:13px;font-weight:700}
+.sidebar-user .info .email{font-size:11px;color:var(--text-light)}
+.main{margin-left:280px;padding:32px 36px;min-height:100vh}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px}
+.header h1{font-size:28px;font-weight:800;background:linear-gradient(135deg,var(--text-dark),var(--primary));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.header .subtitle{font-size:14px;color:var(--text-light);margin-top:6px;-webkit-text-fill-color:var(--text-light)}
+.header-right{display:flex;align-items:center;gap:14px}
+.header-right .date-badge{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:10px 18px;font-size:13px;font-weight:600;color:var(--text-mid);box-shadow:var(--shadow-sm)}
+.print-btn{background:linear-gradient(135deg,var(--primary),var(--purple));color:#fff;border:none;border-radius:12px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 4px 12px rgba(79,106,232,.25);transition:all .2s}
+.print-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(79,106,232,.3)}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:32px}
+.kpi-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:26px;transition:all .3s;box-shadow:var(--shadow-sm)}
+.kpi-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px)}
+.kpi-card .kpi-header{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.kpi-card .kpi-icon{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px}
+.kpi-card .kpi-label{font-size:12px;font-weight:600;color:var(--text-light);letter-spacing:.5px}
+.kpi-card .kpi-value{font-size:32px;font-weight:800}
+.kpi-card .kpi-sub{font-size:12px;color:var(--text-light);margin-top:6px}
+.kpi-card.gradient{background:linear-gradient(135deg,#4F6AE8,#9B6BF7,#E96DB0);border:none;box-shadow:0 8px 32px rgba(79,106,232,.25)}
+.kpi-card.gradient .kpi-label,.kpi-card.gradient .kpi-value,.kpi-card.gradient .kpi-sub{color:#fff}
+.kpi-card.gradient .kpi-icon{background:rgba(255,255,255,.2)}
+.kpi-card.gold-gradient{background:linear-gradient(135deg,#F5A623,#D4A843,#E8C547);border:none;box-shadow:0 8px 24px rgba(212,168,67,.25)}
+.kpi-card.gold-gradient .kpi-label,.kpi-card.gold-gradient .kpi-value,.kpi-card.gold-gradient .kpi-sub{color:#fff}
+.kpi-card.gold-gradient .kpi-icon{background:rgba(255,255,255,.2)}
+.phase-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:32px}
+.phase-card{border-radius:14px;padding:18px;border-left:4px solid;transition:all .3s}
+.phase-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.phase-card .phase-num{font-size:11px;font-weight:800;margin-bottom:6px}
+.phase-card .phase-title{font-size:14px;font-weight:700;margin-bottom:4px}
+.phase-card .phase-period{font-size:11px;color:var(--text-light)}
+.phase-card .phase-desc{font-size:11px;color:var(--text-mid);margin-top:8px}
+.phase-card .progress-bar{margin-top:10px;height:6px;background:#e0e0e0;border-radius:3px;overflow:hidden}
+.phase-card .progress-bar .fill{height:100%;border-radius:3px;transition:width .5s}
+.phase-card.current{box-shadow:0 0 0 2px var(--primary),var(--shadow-md)}
+.section-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:26px;margin-bottom:28px;box-shadow:var(--shadow-sm)}
+.section-card h3{font-size:18px;font-weight:800;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.alert-list{display:flex;flex-direction:column;gap:10px}
+.alert-item{display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:12px;font-size:13px}
+.alert-item.warn{background:var(--orange-light);color:#9a6200}
+.alert-item.danger{background:var(--red-light);color:#c0392b}
+.alert-item.info{background:var(--primary-light);color:var(--primary)}
+.alert-icon{font-size:20px;flex-shrink:0}
+.tab-content{display:none}
+.tab-content.active{display:block}
+/* Task list */
+.task-grid{display:flex;flex-direction:column;gap:10px}
+.task-card{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:16px 20px;display:grid;grid-template-columns:36px 1fr 100px 100px 120px;align-items:center;gap:14px;transition:all .25s;box-shadow:var(--shadow-sm)}
+.task-card:hover{box-shadow:var(--shadow-md);border-color:var(--primary);transform:translateX(3px)}
+.task-num{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff}
+.task-info h4{font-size:14px;font-weight:700;margin-bottom:3px}
+.task-info p{font-size:12px;color:var(--text-light)}
+.task-category{font-size:10.5px;font-weight:700;padding:5px 12px;border-radius:8px;text-align:center;white-space:nowrap}
+.task-deadline{font-size:12px;font-weight:600;color:var(--text-mid);text-align:center}
+.task-status{font-size:10.5px;font-weight:800;padding:6px 14px;border-radius:10px;text-align:center;cursor:pointer;user-select:none}
+.status-todo{background:var(--bg);color:var(--text-light)}
+.status-in_progress{background:var(--primary-light);color:var(--primary)}
+.status-done{background:var(--green-light);color:var(--green)}
+.status-delayed{background:var(--red-light);color:var(--red)}
+.status-blocked{background:var(--orange-light);color:var(--orange)}
+.cat-legal{background:var(--purple-light);color:var(--purple)}
+.cat-labor{background:var(--cyan-light);color:var(--cyan)}
+.cat-vehicle{background:var(--orange-light);color:var(--orange)}
+.cat-insurance{background:var(--green-light);color:var(--green)}
+.cat-finance{background:var(--primary-light);color:var(--primary)}
+.cat-it{background:var(--pink-light);color:var(--pink)}
+.cat-ops{background:var(--red-light);color:var(--red)}
+.pills{background:var(--white);border:1px solid var(--border);padding:4px;border-radius:14px;display:inline-flex;box-shadow:var(--shadow-sm);margin-bottom:20px;flex-wrap:wrap}
+.pill{padding:9px 16px;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;transition:all .25s;color:var(--text-mid);border:none;background:transparent;font-family:inherit}
+.pill.active{background:linear-gradient(135deg,var(--primary),var(--purple));color:#fff;box-shadow:0 4px 12px rgba(79,106,232,.2)}
+.pill:hover:not(.active){background:var(--primary-light)}
+/* Gantt */
+.gantt-wrap{overflow-x:auto}
+.gantt-table{width:100%;border-collapse:collapse;min-width:900px}
+.gantt-table th{font-size:11px;font-weight:800;color:var(--text-light);text-align:center;padding:10px 4px;border-bottom:2px solid var(--border)}
+.gantt-table th:first-child{text-align:left;width:240px}
+.gantt-table td{padding:7px 2px;border-bottom:1px solid #EEF2FF;height:38px;position:relative}
+.gantt-table td:first-child{font-size:12px;font-weight:600;color:var(--text-mid);padding-left:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:240px}
+.gantt-bar{height:24px;border-radius:6px;position:absolute;top:7px;min-width:4px}
+.today-line{position:absolute;top:0;bottom:0;width:2px;background:var(--red);z-index:5;pointer-events:none}
+/* Subsidy */
+.subsidy-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px}
+.subsidy-card{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:22px;transition:all .3s;box-shadow:var(--shadow-sm);position:relative;overflow:hidden}
+.subsidy-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px)}
+.subsidy-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gold),var(--orange))}
+.subsidy-card h4{font-size:14px;font-weight:700;margin-bottom:8px}
+.subsidy-card .s-amount{font-size:22px;font-weight:800;color:var(--gold);margin-bottom:8px}
+.subsidy-card .s-desc{font-size:12px;color:var(--text-light);line-height:1.6;margin-bottom:10px}
+.subsidy-card .s-status{font-size:10.5px;font-weight:800;padding:5px 12px;border-radius:8px;cursor:pointer;display:inline-block}
+.subsidy-card .s-memo{margin-top:10px}
+.subsidy-card .s-memo textarea{width:100%;border:1px solid var(--border);border-radius:8px;padding:8px;font-size:12px;font-family:inherit;resize:vertical;min-height:40px}
+.subsidy-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+.subsidy-summary .ss-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center}
+.subsidy-summary .ss-card .ss-label{font-size:12px;color:var(--text-light);margin-bottom:6px}
+.subsidy-summary .ss-card .ss-value{font-size:28px;font-weight:800}
+/* Milestone */
+.ms-list{display:flex;flex-direction:column;gap:12px}
+.ms-item{display:grid;grid-template-columns:1fr 130px 130px 100px;align-items:center;gap:14px;padding:14px 18px;background:var(--white);border:1px solid var(--border);border-radius:12px}
+.ms-item .ms-name{font-size:14px;font-weight:700}
+.ms-item .ms-phase{font-size:11px;color:var(--text-light)}
+.ms-item input[type=date]{border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-size:12px;font-family:inherit}
+.ms-item .ms-status{font-size:11px;font-weight:700;padding:5px 12px;border-radius:8px;text-align:center}
+/* Risk */
+.risk-item{display:grid;grid-template-columns:1fr 80px 80px 80px 1fr;gap:10px;padding:14px 18px;background:var(--white);border:1px solid var(--border);border-radius:12px;margin-bottom:10px;align-items:center}
+.risk-item .risk-name{font-size:13px;font-weight:700}
+.risk-item select{border:1px solid var(--border);border-radius:8px;padding:5px 8px;font-size:11px;font-family:inherit}
+.risk-item input{border:1px solid var(--border);border-radius:8px;padding:5px 8px;font-size:11px;font-family:inherit;width:100%}
+/* Transfer */
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:28px}
+.detail-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow-sm)}
+.detail-card h3{font-size:17px;font-weight:800;margin-bottom:18px}
+.detail-table{width:100%;border-collapse:collapse}
+.detail-table th{font-size:11px;font-weight:800;color:var(--text-light);text-align:left;padding:10px;border-bottom:2px solid var(--border)}
+.detail-table td{font-size:13px;padding:11px 10px;border-bottom:1px solid #EEF2FF;color:var(--text-mid)}
+.detail-table select{border:1px solid var(--border);border-radius:6px;padding:4px 6px;font-size:11px;font-family:inherit}
+/* Cost sim */
+.sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.sim-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:26px}
+.sim-card h3{font-size:16px;font-weight:800;margin-bottom:16px}
+.sim-card label{font-size:12px;font-weight:600;color:var(--text-mid);display:block;margin-bottom:4px;margin-top:12px}
+.sim-card input,.sim-card select{width:100%;border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:13px;font-family:inherit}
+.sim-result{font-size:28px;font-weight:800;color:var(--primary);margin-top:16px}
+/* Export */
+.data-actions{display:flex;gap:16px;flex-wrap:wrap}
+.data-actions button{padding:12px 24px;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;border:none;font-family:inherit;transition:all .2s}
+.data-actions button:hover{transform:translateY(-1px)}
+.btn-export{background:var(--green);color:#fff}
+.btn-import{background:var(--primary);color:#fff}
+.btn-reset{background:var(--red);color:#fff}
+.note-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid #EEF2FF}
+.note-item:last-child{border-bottom:none}
+.note-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.note-text{font-size:13px;color:var(--text-mid);line-height:1.7}
+.note-text strong{color:var(--text-dark)}
+@media print{.sidebar{display:none}.main{margin-left:0;padding:16px}.print-btn,.pills,.nav-item{display:none}}
+</style>
+</head>
+<body>
+<div class="sidebar">
+<div class="sidebar-logo"><div class="icon">K</div><span>KAM</span></div>
+<div class="sidebar-nav">
+<div class="nav-label">Dashboard</div>
+<div class="nav-item active" onclick="showTab('dashboard',this)"><span class="emoji">&#x1F4CA;</span> ダッシュボード</div>
+<div class="nav-item" onclick="showTab('tasks',this)"><span class="emoji">&#x1F4CB;</span> タスク一覧</div>
+<div class="nav-item" onclick="showTab('gantt',this)"><span class="emoji">&#x1F4C5;</span> ガントチャート</div>
+<div class="nav-label">カテゴリ別</div>
+<div class="nav-item" onclick="showTab('subsidy',this)"><span class="emoji">&#x1F4B0;</span> 助成金管理 <span class="badge badge-gold">18件</span></div>
+<div class="nav-item" onclick="showTab('milestone',this)"><span class="emoji">&#x1F3AF;</span> マイルストーン</div>
+<div class="nav-item" onclick="showTab('risk',this)"><span class="emoji">&#x26A0;&#xFE0F;</span> リスク管理</div>
+<div class="nav-item" onclick="showTab('transfer',this)"><span class="emoji">&#x1F504;</span> 転籍者・車両</div>
+<div class="nav-item" onclick="showTab('cost',this)"><span class="emoji">&#x1F4B1;</span> 費用按分</div>
+<div class="nav-item" onclick="showTab('data',this)"><span class="emoji">&#x1F4BE;</span> データ管理</div>
+</div>
+<div class="sidebar-cta"><h4>2026年11月 営業開始</h4><p>4/15スタート → 約7ヶ月で準備完了</p></div>
+<div class="sidebar-user"><div class="avatar">W</div><div class="info"><div class="name">渡邊 将樹</div><div class="email">KAM株式会社 代表</div></div></div>
+</div>
+<div class="main">
+<div class="header"><div><h1>KAM事業譲渡プロジェクトダッシュボード</h1><div class="subtitle">2026年4月15日 → 11月 営業開始 | 一般貨物運送事業 | 助成金最大活用プラン</div></div><div class="header-right"><div class="date-badge" id="today-badge"></div><button class="print-btn" onclick="window.print()">印刷</button></div></div>
+<div id="tab-dashboard" class="tab-content active"></div>
+<div id="tab-tasks" class="tab-content"></div>
+<div id="tab-gantt" class="tab-content"></div>
+<div id="tab-subsidy" class="tab-content"></div>
+<div id="tab-milestone" class="tab-content"></div>
+<div id="tab-risk" class="tab-content"></div>
+<div id="tab-transfer" class="tab-content"></div>
+<div id="tab-cost" class="tab-content"></div>
+<div id="tab-data" class="tab-content"></div>
+</div>
+<script>
+'use strict';
+const STORAGE_KEY='kam-dashboard-v1';
+const TARGET_DATE=new Date('2026-11-01');
+const PHASES=[
+{id:1,name:'基盤整備',period:'4/15-5/31',color:'var(--primary)',bg:'var(--primary-light)',desc:'定款変更・就業規則・社保加入'},
+{id:2,name:'人事・労務構築',period:'6/1-6/30',color:'var(--cyan)',bg:'var(--cyan-light)',desc:'就業規則届出・定年引上げ・助成金申請'},
+{id:3,name:'車両・保険整備',period:'7/1-8/31',color:'var(--orange)',bg:'var(--orange-light)',desc:'譲渡・緑ナンバー・保険切替'},
+{id:4,name:'システム・IT導入',period:'8/1-9/30',color:'var(--pink)',bg:'var(--pink-light)',desc:'Jinjer・デジタコ・IT補助金'},
+{id:5,name:'運行準備・リハ',period:'10/1-10/31',color:'var(--green)',bg:'var(--green-light)',desc:'安全教育・試運行・健康診断'},
+{id:6,name:'営業開始',period:'11/1〜',color:'var(--purple)',bg:'linear-gradient(135deg,var(--primary),var(--purple))',desc:'運輸開始届・本格スタート'}
+];
+const CAT_LABELS={legal:'法務',labor:'人事・労務',vehicle:'車両',insurance:'保険',finance:'財務',it:'IT',ops:'運行'};
+const CAT_COLORS={legal:'purple',labor:'cyan',vehicle:'orange',insurance:'green',finance:'primary',it:'pink',ops:'red'};
+const STATUS_LABELS={todo:'未着手',in_progress:'進行中',done:'完了',delayed:'遅延',blocked:'ブロック中'};
+const STATUS_CYCLE=['todo','in_progress','done','delayed','blocked'];
+
+const DEFAULT_TASKS=[
+{id:1,phase:1,name:'定款変更案の作成',category:'legal',startDate:'2026-04-15',endDate:'2026-04-25',status:'todo',priority:'high'},
+{id:2,phase:1,name:'株主総会・定款変更決議',category:'legal',startDate:'2026-04-25',endDate:'2026-05-10',status:'todo',priority:'high'},
+{id:3,phase:1,name:'定款変更の登記申請',category:'legal',startDate:'2026-05-10',endDate:'2026-05-25',status:'todo',priority:'normal'},
+{id:4,phase:1,name:'就業規則の作成（定年60歳未満設定）',category:'labor',startDate:'2026-04-15',endDate:'2026-05-31',status:'todo',priority:'high'},
+{id:5,phase:1,name:'育児・介護休業規程の整備',category:'labor',startDate:'2026-04-20',endDate:'2026-05-31',status:'todo',priority:'high'},
+{id:6,phase:1,name:'賃金規程・退職金規程の整備',category:'labor',startDate:'2026-04-20',endDate:'2026-05-31',status:'todo',priority:'high'},
+{id:7,phase:1,name:'労働保険の保険関係成立届',category:'insurance',startDate:'2026-04-15',endDate:'2026-04-25',status:'todo',priority:'high'},
+{id:8,phase:1,name:'雇用保険の適用事業所設置届',category:'insurance',startDate:'2026-04-15',endDate:'2026-04-25',status:'todo',priority:'high'},
+{id:9,phase:1,name:'社会保険の新規適用届',category:'insurance',startDate:'2026-04-15',endDate:'2026-04-30',status:'todo',priority:'high'},
+{id:10,phase:1,name:'税務署への届出',category:'finance',startDate:'2026-04-15',endDate:'2026-05-15',status:'todo',priority:'high'},
+{id:11,phase:1,name:'事業計画書・資金繰り表の作成',category:'finance',startDate:'2026-04-15',endDate:'2026-05-31',status:'todo',priority:'normal'},
+{id:12,phase:1,name:'社労士の顧問契約締結',category:'finance',startDate:'2026-04-15',endDate:'2026-04-30',status:'todo',priority:'high'},
+{id:13,phase:2,name:'就業規則の届出',category:'labor',startDate:'2026-06-01',endDate:'2026-06-10',status:'todo',priority:'normal'},
+{id:14,phase:2,name:'定年65歳への引上げ改定',category:'labor',startDate:'2026-06-10',endDate:'2026-06-20',status:'todo',priority:'normal'},
+{id:15,phase:2,name:'36協定の締結・届出',category:'labor',startDate:'2026-06-01',endDate:'2026-06-15',status:'todo',priority:'normal'},
+{id:16,phase:2,name:'転籍同意書の取得（7名分）',category:'labor',startDate:'2026-06-01',endDate:'2026-06-30',status:'todo',priority:'normal'},
+{id:17,phase:2,name:'運行管理者・整備管理者の選任届',category:'labor',startDate:'2026-06-15',endDate:'2026-06-30',status:'todo',priority:'normal'},
+{id:18,phase:2,name:'65歳超雇用推進助成金の申請',category:'finance',startDate:'2026-06-20',endDate:'2026-07-15',status:'todo',priority:'normal'},
+{id:19,phase:2,name:'キャリアアップ助成金 計画届',category:'finance',startDate:'2026-06-01',endDate:'2026-06-15',status:'todo',priority:'normal'},
+{id:20,phase:2,name:'両立支援等助成金の申請準備',category:'finance',startDate:'2026-06-01',endDate:'2026-06-30',status:'todo',priority:'normal'},
+{id:21,phase:2,name:'働き方改革推進支援助成金の申請',category:'finance',startDate:'2026-06-01',endDate:'2026-06-30',status:'todo',priority:'normal'},
+{id:22,phase:2,name:'業務改善助成金の申請',category:'finance',startDate:'2026-06-15',endDate:'2026-06-30',status:'todo',priority:'normal'},
+{id:23,phase:2,name:'人材開発支援助成金 計画届',category:'finance',startDate:'2026-06-15',endDate:'2026-06-30',status:'todo',priority:'normal'},
+{id:24,phase:3,name:'車両譲渡契約書の締結（8台）',category:'vehicle',startDate:'2026-07-01',endDate:'2026-07-15',status:'todo',priority:'normal'},
+{id:25,phase:3,name:'事業用自動車等連絡書の取得',category:'vehicle',startDate:'2026-07-15',endDate:'2026-07-31',status:'todo',priority:'normal'},
+{id:26,phase:3,name:'車両名義変更＋緑ナンバー取得',category:'vehicle',startDate:'2026-07-15',endDate:'2026-08-31',status:'todo',priority:'normal'},
+{id:27,phase:3,name:'車検残の確認・必要に応じて車検',category:'vehicle',startDate:'2026-07-01',endDate:'2026-08-31',status:'todo',priority:'normal'},
+{id:28,phase:3,name:'自動車保険の切替・新規加入',category:'insurance',startDate:'2026-07-15',endDate:'2026-08-31',status:'todo',priority:'normal'},
+{id:29,phase:3,name:'リース契約の承継・新規契約',category:'vehicle',startDate:'2026-07-01',endDate:'2026-08-15',status:'todo',priority:'normal'},
+{id:30,phase:3,name:'トラック協会 安全装置導入助成金',category:'finance',startDate:'2026-07-01',endDate:'2026-08-31',status:'todo',priority:'normal'},
+{id:31,phase:4,name:'Jinjer人事・給与システム導入',category:'it',startDate:'2026-08-01',endDate:'2026-08-31',status:'todo',priority:'normal'},
+{id:32,phase:4,name:'デジタコ（ITP-WebService V3）契約',category:'it',startDate:'2026-08-01',endDate:'2026-09-15',status:'todo',priority:'normal'},
+{id:33,phase:4,name:'アルコールチェッカー・点呼システム導入',category:'it',startDate:'2026-08-15',endDate:'2026-09-30',status:'todo',priority:'normal'},
+{id:34,phase:4,name:'会計ソフト・経費精算の導入',category:'it',startDate:'2026-08-01',endDate:'2026-08-31',status:'todo',priority:'normal'},
+{id:35,phase:4,name:'IT導入補助金の申請',category:'finance',startDate:'2026-08-01',endDate:'2026-08-31',status:'todo',priority:'normal'},
+{id:36,phase:4,name:'トラック輸送省エネ化推進事業',category:'finance',startDate:'2026-08-01',endDate:'2026-09-30',status:'todo',priority:'normal'},
+{id:37,phase:5,name:'転籍者の正式入社手続き（7名）',category:'ops',startDate:'2026-10-01',endDate:'2026-10-10',status:'todo',priority:'normal'},
+{id:38,phase:5,name:'運行管理規程の策定',category:'ops',startDate:'2026-10-01',endDate:'2026-10-15',status:'todo',priority:'normal'},
+{id:39,phase:5,name:'初任運転者教育の実施',category:'ops',startDate:'2026-10-05',endDate:'2026-10-20',status:'todo',priority:'normal'},
+{id:40,phase:5,name:'健康診断の実施',category:'ops',startDate:'2026-10-01',endDate:'2026-10-20',status:'todo',priority:'normal'},
+{id:41,phase:5,name:'運送契約・荷主との契約締結',category:'ops',startDate:'2026-10-01',endDate:'2026-10-31',status:'todo',priority:'normal'},
+{id:42,phase:5,name:'試運行・業務リハーサル',category:'ops',startDate:'2026-10-20',endDate:'2026-10-31',status:'todo',priority:'normal'},
+{id:43,phase:6,name:'運輸開始届の提出',category:'legal',startDate:'2026-11-01',endDate:'2026-11-01',status:'todo',priority:'normal'},
+{id:44,phase:6,name:'本格営業スタート',category:'ops',startDate:'2026-11-01',endDate:'2026-11-01',status:'todo',priority:'normal'},
+{id:45,phase:6,name:'運賃料金設定届の提出',category:'legal',startDate:'2026-11-01',endDate:'2026-11-30',status:'todo',priority:'normal'},
+{id:46,phase:6,name:'小規模事業者持続化補助金の申請',category:'finance',startDate:'2026-11-01',endDate:'2026-12-31',status:'todo',priority:'normal'}
+];
+
+const DEFAULT_SUBSIDIES=[
+{id:1,name:'65歳超雇用推進助成金（継続雇用促進コース）',amount:'15万〜160万円',amountNum:1600000,status:'not_applied',deadline:'',memo:'',phase:'P2'},
+{id:2,name:'キャリアアップ助成金（正社員化コース）',amount:'最大80万円/人',amountNum:800000,status:'not_applied',deadline:'',memo:'',phase:'P2'},
+{id:3,name:'両立支援等助成金（育児休業等支援コース）',amount:'最大57万円/人',amountNum:570000,status:'not_applied',deadline:'',memo:'',phase:'P1'},
+{id:4,name:'両立支援等助成金（出生時両立支援コース）',amount:'最大57万円',amountNum:570000,status:'not_applied',deadline:'',memo:'',phase:'P1'},
+{id:5,name:'両立支援等助成金（育休中等業務代替支援）',amount:'最大140万円',amountNum:1400000,status:'not_applied',deadline:'',memo:'',phase:'P1'},
+{id:6,name:'人材開発支援助成金',amount:'経費の最大75%',amountNum:500000,status:'not_applied',deadline:'',memo:'',phase:'P2'},
+{id:7,name:'65歳超雇用推進助成金（雇用管理改善）',amount:'経費の60%（最大60万円）',amountNum:600000,status:'not_applied',deadline:'',memo:'',phase:'P2'},
+{id:8,name:'特定求職者雇用開発助成金',amount:'最大240万円/人',amountNum:2400000,status:'not_applied',deadline:'',memo:'',phase:'将来'},
+{id:9,name:'65歳超雇用推進助成金（無期雇用転換）',amount:'最大60万円/人',amountNum:600000,status:'not_applied',deadline:'',memo:'',phase:'将来'},
+{id:10,name:'働き方改革推進支援助成金',amount:'最大200万円',amountNum:2000000,status:'not_applied',deadline:'',memo:'',phase:'P2'},
+{id:11,name:'業務改善助成金',amount:'最大600万円',amountNum:6000000,status:'not_applied',deadline:'',memo:'',phase:'P2'},
+{id:12,name:'人材確保等支援助成金（テレワーク）',amount:'最大100万円',amountNum:1000000,status:'not_applied',deadline:'',memo:'',phase:'P4'},
+{id:13,name:'トラック輸送省エネ化推進事業',amount:'車両価格の1/3',amountNum:500000,status:'not_applied',deadline:'',memo:'',phase:'P4'},
+{id:14,name:'安全装置等導入促進助成事業',amount:'機器代の一部',amountNum:300000,status:'not_applied',deadline:'',memo:'',phase:'P3'},
+{id:15,name:'低炭素型ディーゼルトラック普及事業',amount:'車両価格の一部',amountNum:500000,status:'not_applied',deadline:'',memo:'',phase:'将来'},
+{id:16,name:'IT導入補助金',amount:'最大450万円',amountNum:4500000,status:'not_applied',deadline:'',memo:'',phase:'P4'},
+{id:17,name:'小規模事業者持続化補助金',amount:'最大250万円',amountNum:2500000,status:'not_applied',deadline:'',memo:'',phase:'P6'},
+{id:18,name:'日本政策金融公庫 新規開業資金',amount:'最大7,200万円',amountNum:72000000,status:'not_applied',deadline:'',memo:'',phase:'随時'}
+];
+const SUBSIDY_STATUS_LABELS={not_applied:'未申請',preparing:'準備中',applied:'申請済',approved:'承認済',rejected:'不採択',received:'受給完了'};
+const SUBSIDY_STATUS_CYCLE=['not_applied','preparing','applied','approved','rejected','received'];
+
+const DEFAULT_MILESTONES=[
+{id:1,name:'定款変更完了',phase:1,plannedDate:'2026-05-25',actualDate:'',status:'pending'},
+{id:2,name:'就業規則・社保整備完了',phase:1,plannedDate:'2026-05-31',actualDate:'',status:'pending'},
+{id:3,name:'助成金一斉申請完了',phase:2,plannedDate:'2026-06-30',actualDate:'',status:'pending'},
+{id:4,name:'転籍同意書全員取得',phase:2,plannedDate:'2026-06-30',actualDate:'',status:'pending'},
+{id:5,name:'車両名義変更・緑ナンバー取得完了',phase:3,plannedDate:'2026-08-31',actualDate:'',status:'pending'},
+{id:6,name:'システム導入完了',phase:4,plannedDate:'2026-09-30',actualDate:'',status:'pending'},
+{id:7,name:'正式入社手続き完了',phase:5,plannedDate:'2026-10-10',actualDate:'',status:'pending'},
+{id:8,name:'試運行完了',phase:5,plannedDate:'2026-10-31',actualDate:'',status:'pending'},
+{id:9,name:'営業開始',phase:6,plannedDate:'2026-11-01',actualDate:'',status:'pending'}
+];
+
+const DEFAULT_RISKS=[
+{id:1,name:'改善基準告示対応（1日拘束13h・月284h）',impact:'high',probability:'high',countermeasure:'就業規則に反映、デジタコで管理',status:'monitoring'},
+{id:2,name:'許可後1年以内に運輸開始しないと許可失効',impact:'high',probability:'low',countermeasure:'スケジュール厳守、バッファ確保',status:'monitoring'},
+{id:3,name:'2026年貨物自動車運送事業法改正（5年更新制）',impact:'medium',probability:'high',countermeasure:'詳細確認後に対応',status:'monitoring'},
+{id:4,name:'助成金は「事前申請」が絶対条件',impact:'high',probability:'medium',countermeasure:'社労士連携、計画届事前提出',status:'monitoring'},
+{id:5,name:'就業規則の変更前版の保管必須',impact:'medium',probability:'low',countermeasure:'届出済みコピーを保管',status:'monitoring'},
+{id:6,name:'最低5名の正規ドライバー確保（退職リスク）',impact:'high',probability:'medium',countermeasure:'採用計画準備、ハローワーク登録',status:'monitoring'},
+{id:7,name:'No.2車両のデジタコ未搭載',impact:'medium',probability:'high',countermeasure:'営業開始前に搭載完了',status:'monitoring'},
+{id:8,name:'費用按分協定の締結が必要',impact:'medium',probability:'low',countermeasure:'神奈川エアーメッセンジャーと協定締結',status:'monitoring'}
+];
+
+const DEFAULT_STAFF=[
+{name:'和田 將志',kana:'ワダ マサシ',note:'事務所勤務',consentStatus:'not_asked'},
+{name:'佐藤 剛史',kana:'サトウ タケシ',note:'月・土＋シフト',consentStatus:'not_asked'},
+{name:'金坂 登志',kana:'カネサカ トシ',note:'土・日＋シフト',consentStatus:'not_asked'},
+{name:'田辺 義明',kana:'タナベ ヨシアキ',note:'日・月',consentStatus:'not_asked'},
+{name:'関谷 政江',kana:'セキヤ マサエ',note:'金・土＋シフト',consentStatus:'not_asked'},
+{name:'遊佐 亜子',kana:'ユサ アコ',note:'日・水・木',consentStatus:'not_asked'},
+{name:'小清水 誠',kana:'コシミズ マコト',note:'ドライバー',consentStatus:'not_asked'}
+];
+const CONSENT_LABELS={not_asked:'未打診',asked:'打診済',agreed:'同意済',declined:'辞退'};
+const CONSENT_CYCLE=['not_asked','asked','agreed','declined'];
+
+const DEFAULT_VEHICLES=[
+{no:2,maker:'マツダ',plate:'横浜 400あ9222',type:'1BOX',lease:'ヤマトリース',insurance:'損保ジャパン',note:'デジタコ未搭載',prepStatus:'not_started'},
+{no:3,maker:'マツダ',plate:'横浜 400あ9179',type:'1BOX',lease:'ヤマトリース',insurance:'損保ジャパン',note:'',prepStatus:'not_started'},
+{no:12,maker:'トヨタ',plate:'横浜 400あ9040',type:'1BOX',lease:'ヤマトリース',insurance:'損保ジャパン',note:'',prepStatus:'not_started'},
+{no:13,maker:'トヨタ',plate:'横浜 400あ6314',type:'1BOX',lease:'三井オートサービス',insurance:'あいおい',note:'',prepStatus:'not_started'},
+{no:19,maker:'トヨタ',plate:'横浜 400あ8997',type:'1t',lease:'ヤマトリース',insurance:'損保ジャパン',note:'',prepStatus:'not_started'},
+{no:29,maker:'ニッサン',plate:'横浜 400あ8923',type:'1t',lease:'ヤマトリース',insurance:'損保ジャパン',note:'',prepStatus:'not_started'},
+{no:42,maker:'トヨタ',plate:'横浜 400あ9585',type:'1BOX',lease:'ヤマトリース',insurance:'損保ジャパン',note:'',prepStatus:'not_started'},
+{no:43,maker:'マツダ',plate:'横浜 400あ8411',type:'1BOX',lease:'自社',insurance:'あいおい',note:'',prepStatus:'not_started'}
+];
+const VEHICLE_STATUS_LABELS={not_started:'未着手',contract_done:'譲渡契約済',name_changed:'名義変更済',green_plate:'緑ナンバー済',inspected:'車検済',insured:'保険切替済',ready:'運行可能'};
+const VEHICLE_STATUS_CYCLE=['not_started','contract_done','name_changed','green_plate','inspected','insured','ready'];
+
+// State
+let state;
+function loadState(){
+  const s=localStorage.getItem(STORAGE_KEY);
+  if(s){state=JSON.parse(s);return;}
+  state={tasks:JSON.parse(JSON.stringify(DEFAULT_TASKS)),subsidies:JSON.parse(JSON.stringify(DEFAULT_SUBSIDIES)),milestones:JSON.parse(JSON.stringify(DEFAULT_MILESTONES)),risks:JSON.parse(JSON.stringify(DEFAULT_RISKS)),staff:JSON.parse(JSON.stringify(DEFAULT_STAFF)),vehicles:JSON.parse(JSON.stringify(DEFAULT_VEHICLES))};
+  saveState();
+}
+function saveState(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}
+function resetState(){localStorage.removeItem(STORAGE_KEY);loadState();renderAll();}
+loadState();
+// Navigation
+function showTab(tab,el){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  if(el)el.classList.add('active');
+}
+
+// Helpers
+function daysUntil(d){return Math.ceil((new Date(d)-new Date())/(1000*60*60*24));}
+function formatDate(d){if(!d)return'-';const p=d.split('-');return p[1]+'/'+p[2];}
+function phaseColor(p){return PHASES[p-1]?.color||'var(--primary)';}
+
+// Render Dashboard
+function renderDashboard(){
+  const el=document.getElementById('tab-dashboard');
+  const daysLeft=daysUntil('2026-11-01');
+  const doneTasks=state.tasks.filter(t=>t.status==='done').length;
+  const totalTasks=state.tasks.length;
+  const appliedSubs=state.subsidies.filter(s=>['applied','approved','received'].includes(s.status)).length;
+  const agreedStaff=state.staff.filter(s=>s.consentStatus==='agreed').length;
+  const readyVehicles=state.vehicles.filter(v=>v.prepStatus==='ready').length;
+
+  let alertsHtml='';
+  const today=new Date();
+  state.tasks.forEach(t=>{
+    if(t.status!=='done'&&t.status!=='blocked'&&new Date(t.endDate)<today){
+      alertsHtml+=`<div class="alert-item danger"><span class="alert-icon">&#x1F6A8;</span> <strong>${t.name}</strong> - 期限超過（${formatDate(t.endDate)}）</div>`;
+    }
+  });
+  state.milestones.forEach(m=>{
+    if(m.status==='pending'&&new Date(m.plannedDate)<today){
+      alertsHtml+=`<div class="alert-item warn"><span class="alert-icon">&#x26A0;&#xFE0F;</span> マイルストーン「<strong>${m.name}</strong>」が遅延中（${formatDate(m.plannedDate)}）</div>`;
+    }
+  });
+  if(!alertsHtml)alertsHtml='<div class="alert-item info"><span class="alert-icon">&#x2705;</span> 遅延アラートなし。順調に進行中。</div>';
+
+  // Phase progress
+  let phaseHtml='';
+  const currentMonth=today.getMonth()+1;
+  const phaseStartMonths=[4,6,7,8,10,11];
+  let currentPhase=1;
+  for(let i=phaseStartMonths.length-1;i>=0;i--){if(currentMonth>=phaseStartMonths[i]){currentPhase=i+1;break;}}
+
+  PHASES.forEach((p,i)=>{
+    const pTasks=state.tasks.filter(t=>t.phase===p.id);
+    const pDone=pTasks.filter(t=>t.status==='done').length;
+    const pct=pTasks.length?Math.round(pDone/pTasks.length*100):0;
+    const isCurrent=p.id===currentPhase;
+    const bgStyle=p.id===6?`background:${p.bg};color:#fff`:`background:${p.bg};border-color:${p.color}`;
+    phaseHtml+=`<div class="phase-card ${isCurrent?'current':''}" style="${bgStyle}">
+      <div class="phase-num" style="color:${p.id===6?'rgba(255,255,255,.9)':p.color}">PHASE ${p.id}</div>
+      <div class="phase-title" style="${p.id===6?'color:#fff':''}">${p.name}</div>
+      <div class="phase-period">${p.period}</div>
+      <div class="phase-desc" style="${p.id===6?'color:rgba(255,255,255,.9)':''}">${p.desc}</div>
+      <div class="progress-bar"><div class="fill" style="width:${pct}%;background:${p.id===6?'rgba(255,255,255,.5)':p.color}"></div></div>
+      <div style="font-size:11px;font-weight:700;margin-top:4px;color:${p.id===6?'#fff':p.color}">${pct}% (${pDone}/${pTasks.length})</div>
+    </div>`;
+  });
+
+  el.innerHTML=`
+    <div class="kpi-row">
+      <div class="kpi-card gradient"><div class="kpi-header"><div class="kpi-icon">&#x1F3AF;</div><div class="kpi-label">営業開始目標</div></div><div class="kpi-value">2026年11月</div><div class="kpi-sub">開始まで残り${daysLeft}日</div></div>
+      <div class="kpi-card gold-gradient"><div class="kpi-header"><div class="kpi-icon">&#x1F48E;</div><div class="kpi-label">助成金見込総額</div></div><div class="kpi-value">約2,500万円+</div><div class="kpi-sub">${appliedSubs}/18件 申請済</div></div>
+      <div class="kpi-card"><div class="kpi-header"><div class="kpi-icon" style="background:var(--cyan-light)">&#x1F465;</div><div class="kpi-label">転籍予定人数</div></div><div class="kpi-value">${agreedStaff}/7名</div><div class="kpi-sub">同意済</div></div>
+      <div class="kpi-card"><div class="kpi-header"><div class="kpi-icon" style="background:var(--orange-light)">&#x1F69B;</div><div class="kpi-label">譲渡車両</div></div><div class="kpi-value">${readyVehicles}/8台</div><div class="kpi-sub">準備完了（1BOX中心）</div></div>
+    </div>
+    <div class="section-card"><h3>&#x1F4C5; フェーズ概要タイムライン（${doneTasks}/${totalTasks}タスク完了 - ${Math.round(doneTasks/totalTasks*100)}%）</h3><div class="phase-grid">${phaseHtml}</div></div>
+    <div class="section-card"><h3>&#x1F514; アラート</h3><div class="alert-list">${alertsHtml}</div></div>`;
+}
+
+// Render Tasks
+function renderTasks(filterCat='all'){
+  const el=document.getElementById('tab-tasks');
+  const cats=['all','legal','labor','vehicle','insurance','finance','it','ops'];
+  let pillsHtml=cats.map(c=>`<button class="pill ${c===filterCat?'active':''}" onclick="renderTasks('${c}')">${c==='all'?'すべて':CAT_LABELS[c]||c}</button>`).join('');
+
+  let tasksHtml='';
+  let lastPhase=0;
+  const filtered=filterCat==='all'?state.tasks:state.tasks.filter(t=>t.category===filterCat);
+  filtered.forEach(t=>{
+    if(t.phase!==lastPhase){lastPhase=t.phase;tasksHtml+=`<div style="font-size:16px;font-weight:800;margin:20px 0 10px;color:${phaseColor(t.phase)}">PHASE ${t.phase} | ${PHASES[t.phase-1].name}</div>`;}
+    tasksHtml+=`<div class="task-card">
+      <div class="task-num" style="background:${phaseColor(t.phase)}">${t.id}</div>
+      <div class="task-info"><h4>${t.name}</h4><p>${formatDate(t.startDate)} ~ ${formatDate(t.endDate)}</p></div>
+      <div class="task-category cat-${CAT_COLORS[t.category]}">${CAT_LABELS[t.category]}</div>
+      <div class="task-deadline">${formatDate(t.endDate)}</div>
+      <div class="task-status status-${t.status}" onclick="cycleTaskStatus(${t.id})">${STATUS_LABELS[t.status]}</div>
+    </div>`;
+  });
+  el.innerHTML=`<div class="pills">${pillsHtml}</div><div class="task-grid">${tasksHtml}</div>`;
+}
+function cycleTaskStatus(id){
+  const t=state.tasks.find(x=>x.id===id);
+  const i=STATUS_CYCLE.indexOf(t.status);
+  t.status=STATUS_CYCLE[(i+1)%STATUS_CYCLE.length];
+  saveState();renderTasks();renderDashboard();
+}
+
+// Render Gantt
+function renderGantt(){
+  const el=document.getElementById('tab-gantt');
+  const months=['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov'];
+  const startEpoch=new Date('2026-04-01').getTime();
+  const endEpoch=new Date('2026-12-01').getTime();
+  const totalDays=(endEpoch-startEpoch)/(1000*60*60*24);
+  const todayPct=Math.max(0,Math.min(100,((new Date().getTime()-startEpoch)/(endEpoch-startEpoch))*100));
+
+  let rows='';
+  let lastPhase=0;
+  state.tasks.forEach(t=>{
+    if(t.phase!==lastPhase){lastPhase=t.phase;rows+=`<tr><td style="font-weight:800;color:${phaseColor(t.phase)}">PHASE ${t.phase} | ${PHASES[t.phase-1].name}</td>${months.map(()=>'<td></td>').join('')}</tr>`;}
+    const sD=Math.max(0,((new Date(t.startDate).getTime()-startEpoch)/(endEpoch-startEpoch))*100);
+    const eD=Math.min(100,((new Date(t.endDate).getTime()-startEpoch)/(endEpoch-startEpoch))*100);
+    const w=Math.max(1,eD-sD);
+    const color=t.status==='done'?'var(--green)':t.status==='delayed'?'var(--red)':t.status==='in_progress'?phaseColor(t.phase):t.status==='blocked'?'var(--orange)':'#c0c8e0';
+    rows+=`<tr><td title="${t.name}">${t.id}. ${t.name}</td><td colspan="8" style="position:relative"><div class="gantt-bar" style="background:${color};left:${sD}%;width:${w}%;opacity:${t.status==='todo'?.5:1}"></div><div class="today-line" style="left:${todayPct}%"></div></td></tr>`;
+  });
+
+  el.innerHTML=`<div class="section-card"><h3>&#x1F4C5; ガントチャート（2026年4月〜11月）</h3><div class="gantt-wrap"><table class="gantt-table"><thead><tr><th>タスク</th>${months.map(m=>`<th>${m}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div></div>`;
+}
+// Render Subsidies
+function renderSubsidies(){
+  const el=document.getElementById('tab-subsidy');
+  const applied=state.subsidies.filter(s=>['applied','approved','received'].includes(s.status));
+  const approved=state.subsidies.filter(s=>['approved','received'].includes(s.status));
+  const totalEst=state.subsidies.reduce((a,s)=>a+s.amountNum,0);
+  const approvedAmt=approved.reduce((a,s)=>a+s.amountNum,0);
+
+  let cardsHtml=state.subsidies.map((s,i)=>{
+    const stCls=s.status==='approved'||s.status==='received'?'background:var(--green-light);color:var(--green)':s.status==='applied'?'background:var(--primary-light);color:var(--primary)':s.status==='rejected'?'background:var(--red-light);color:var(--red)':s.status==='preparing'?'background:var(--orange-light);color:var(--orange)':'background:var(--bg);color:var(--text-light)';
+    return `<div class="subsidy-card"><h4>${s.name}</h4><div class="s-amount">${s.amount}</div><div class="s-desc">フェーズ: ${s.phase}</div>
+    <div class="s-status" style="${stCls}" onclick="cycleSubsidyStatus(${i})">${SUBSIDY_STATUS_LABELS[s.status]}</div>
+    <div style="margin-top:8px"><label style="font-size:11px;color:var(--text-light)">申請期限:</label><input type="date" value="${s.deadline||''}" onchange="updateSubsidyDeadline(${i},this.value)" style="border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:11px;width:100%"></div>
+    <div class="s-memo"><textarea placeholder="メモ..." onchange="updateSubsidyMemo(${i},this.value)">${s.memo||''}</textarea></div></div>`;
+  }).join('');
+
+  el.innerHTML=`
+    <div class="subsidy-summary">
+      <div class="ss-card"><div class="ss-label">見込総額（最大値）</div><div class="ss-value" style="color:var(--gold)">${(totalEst/10000).toLocaleString()}万円</div></div>
+      <div class="ss-card"><div class="ss-label">申請済</div><div class="ss-value" style="color:var(--primary)">${applied.length}/18件</div></div>
+      <div class="ss-card"><div class="ss-label">承認済金額</div><div class="ss-value" style="color:var(--green)">${(approvedAmt/10000).toLocaleString()}万円</div></div>
+    </div>
+    <div class="subsidy-grid">${cardsHtml}</div>`;
+}
+function cycleSubsidyStatus(i){const s=state.subsidies[i];const idx=SUBSIDY_STATUS_CYCLE.indexOf(s.status);s.status=SUBSIDY_STATUS_CYCLE[(idx+1)%SUBSIDY_STATUS_CYCLE.length];saveState();renderSubsidies();renderDashboard();}
+function updateSubsidyDeadline(i,v){state.subsidies[i].deadline=v;saveState();}
+function updateSubsidyMemo(i,v){state.subsidies[i].memo=v;saveState();}
+
+// Render Milestones
+function renderMilestones(){
+  const el=document.getElementById('tab-milestone');
+  const today=new Date();
+  let html=state.milestones.map((m,i)=>{
+    const overdue=m.status==='pending'&&new Date(m.plannedDate)<today;
+    const done=m.status==='achieved';
+    const stStyle=done?'background:var(--green-light);color:var(--green)':overdue?'background:var(--red-light);color:var(--red)':'background:var(--bg);color:var(--text-light)';
+    const stLabel=done?'達成':overdue?`${daysUntil(m.plannedDate)*-1}日遅延`:'未達成';
+    return `<div class="ms-item" style="${overdue?'border-color:var(--red)':''}">
+      <div><div class="ms-name">${m.name}</div><div class="ms-phase">Phase ${m.phase}</div></div>
+      <div><div style="font-size:10px;color:var(--text-light)">予定日</div><input type="date" value="${m.plannedDate}" onchange="updateMsPlanned(${i},this.value)"></div>
+      <div><div style="font-size:10px;color:var(--text-light)">実績日</div><input type="date" value="${m.actualDate||''}" onchange="updateMsActual(${i},this.value)"></div>
+      <div class="ms-status" style="${stStyle};cursor:pointer" onclick="toggleMs(${i})">${stLabel}</div>
+    </div>`;
+  }).join('');
+  el.innerHTML=`<div class="section-card"><h3>&#x1F3AF; マイルストーン</h3><div class="ms-list">${html}</div></div>`;
+}
+function updateMsPlanned(i,v){state.milestones[i].plannedDate=v;saveState();renderMilestones();renderDashboard();}
+function updateMsActual(i,v){state.milestones[i].actualDate=v;if(v)state.milestones[i].status='achieved';saveState();renderMilestones();renderDashboard();}
+function toggleMs(i){state.milestones[i].status=state.milestones[i].status==='achieved'?'pending':'achieved';if(state.milestones[i].status==='pending')state.milestones[i].actualDate='';saveState();renderMilestones();renderDashboard();}
+
+// Render Risks
+function renderRisks(){
+  const el=document.getElementById('tab-risk');
+  let html=state.risks.map((r,i)=>`<div class="risk-item">
+    <div class="risk-name">${r.name}</div>
+    <select onchange="updateRisk(${i},'impact',this.value)"><option value="high" ${r.impact==='high'?'selected':''}>高</option><option value="medium" ${r.impact==='medium'?'selected':''}>中</option><option value="low" ${r.impact==='low'?'selected':''}>低</option></select>
+    <select onchange="updateRisk(${i},'probability',this.value)"><option value="high" ${r.probability==='high'?'selected':''}>高</option><option value="medium" ${r.probability==='medium'?'selected':''}>中</option><option value="low" ${r.probability==='low'?'selected':''}>低</option></select>
+    <select onchange="updateRisk(${i},'status',this.value)"><option value="monitoring" ${r.status==='monitoring'?'selected':''}>監視中</option><option value="acting" ${r.status==='acting'?'selected':''}>対策中</option><option value="resolved" ${r.status==='resolved'?'selected':''}>解消済</option></select>
+    <input value="${r.countermeasure}" onchange="updateRisk(${i},'countermeasure',this.value)" placeholder="対策">
+  </div>`).join('');
+  el.innerHTML=`<div class="section-card"><h3>&#x26A0;&#xFE0F; リスク管理</h3>
+    <div style="display:grid;grid-template-columns:1fr 80px 80px 80px 1fr;gap:10px;padding:8px 18px;font-size:11px;font-weight:800;color:var(--text-light);margin-bottom:8px"><div>リスク</div><div>影響度</div><div>発生確率</div><div>状態</div><div>対策</div></div>
+    ${html}
+    <button onclick="addRisk()" style="margin-top:12px;padding:8px 16px;border-radius:8px;border:1px dashed var(--border);background:transparent;cursor:pointer;font-family:inherit;font-size:12px;color:var(--text-light)">+ リスク追加</button>
+  </div>`;
+}
+function updateRisk(i,key,val){state.risks[i][key]=val;saveState();}
+function addRisk(){state.risks.push({id:Date.now(),name:'新規リスク',impact:'medium',probability:'medium',countermeasure:'',status:'monitoring'});saveState();renderRisks();}
+
+// Render Transfer (Staff + Vehicles)
+function renderTransfer(){
+  const el=document.getElementById('tab-transfer');
+  let staffRows=state.staff.map((s,i)=>{
+    const stCls=s.consentStatus==='agreed'?'background:var(--green-light);color:var(--green)':s.consentStatus==='declined'?'background:var(--red-light);color:var(--red)':s.consentStatus==='asked'?'background:var(--orange-light);color:var(--orange)':'background:var(--bg);color:var(--text-light)';
+    return `<tr><td>${s.name}</td><td>${s.note}</td><td><span style="padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;${stCls}" onclick="cycleConsent(${i})">${CONSENT_LABELS[s.consentStatus]}</span></td></tr>`;
+  }).join('');
+
+  let vehicleRows=state.vehicles.map((v,i)=>{
+    const warn=v.note.includes('digitacho')||v.note.includes('No digi');
+    return `<tr style="${warn?'background:var(--red-light)':''}"><td>${v.no}</td><td>${v.maker}</td><td>${v.plate}</td><td>${v.type}</td><td>${v.lease}</td><td><span style="padding:4px 8px;border-radius:6px;font-size:10px;font-weight:700;cursor:pointer;background:var(--bg);color:var(--text-mid)" onclick="cycleVehicleStatus(${i})">${VEHICLE_STATUS_LABELS[v.prepStatus]}</span></td></tr>`;
+  }).join('');
+
+  el.innerHTML=`<div class="detail-grid">
+    <div class="detail-card"><h3>&#x1F465; 転籍予定者（7名）</h3><table class="detail-table"><thead><tr><th>氏名</th><th>備考</th><th>同意状況</th></tr></thead><tbody>${staffRows}</tbody></table></div>
+    <div class="detail-card"><h3>&#x1F69B; 譲渡対象車両（8台）</h3><table class="detail-table"><thead><tr><th>No</th><th>車名</th><th>登録番号</th><th>種別</th><th>リース元</th><th>準備状況</th></tr></thead><tbody>${vehicleRows}</tbody></table></div>
+  </div>`;
+}
+function cycleConsent(i){const s=state.staff[i];const idx=CONSENT_CYCLE.indexOf(s.consentStatus);s.consentStatus=CONSENT_CYCLE[(idx+1)%CONSENT_CYCLE.length];saveState();renderTransfer();renderDashboard();}
+function cycleVehicleStatus(i){const v=state.vehicles[i];const idx=VEHICLE_STATUS_CYCLE.indexOf(v.prepStatus);v.prepStatus=VEHICLE_STATUS_CYCLE[(idx+1)%VEHICLE_STATUS_CYCLE.length];saveState();renderTransfer();renderDashboard();}
+
+// Cost Allocation Simulator
+function renderCost(){
+  const el=document.getElementById('tab-cost');
+  el.innerHTML=`<div class="sim-grid">
+    <div class="sim-card"><h3>&#x1F4B1; 費用按分シミュレーター</h3>
+      <label>月額家賃・駐車場代合計（円）</label><input type="number" id="sim-total" value="1950000" oninput="calcCost()">
+      <label>按分方法</label><select id="sim-method" onchange="calcCost()">
+        <option value="vehicle_ratio">車両台数割</option><option value="area_ratio">専有面積割</option><option value="revenue_ratio">売上高比率割</option><option value="equal">均等割（折半）</option><option value="employee_ratio">従業員数割</option>
+      </select>
+      <label>KAM台数 / 全車両台数</label><input type="number" id="sim-kam-vehicles" value="8" oninput="calcCost()"> / <input type="number" id="sim-total-vehicles" value="46" oninput="calcCost()">
+      <label>KAM負担割合（%）</label><input type="number" id="sim-share" value="" readonly style="background:#f5f5f5">
+      <div class="sim-result" id="sim-result"></div>
+    </div>
+    <div class="sim-card"><h3>&#x1F4CA; 按分方法の説明</h3>
+      <div class="note-item"><div class="note-icon" style="background:var(--primary-light)">1</div><div class="note-text"><strong>車両台数割</strong> - 保有車両の台数比率で分担（駐車場代に最適）</div></div>
+      <div class="note-item"><div class="note-icon" style="background:var(--cyan-light)">2</div><div class="note-text"><strong>専有面積割</strong> - KAM専用の区画数で分担</div></div>
+      <div class="note-item"><div class="note-icon" style="background:var(--orange-light)">3</div><div class="note-text"><strong>売上高比率割</strong> - 売上比率を事業規模の代替指標として使用</div></div>
+      <div class="note-item"><div class="note-icon" style="background:var(--green-light)">4</div><div class="note-text"><strong>均等割</strong> - 共用基本費用を50%ずつ分担</div></div>
+      <div class="note-item"><div class="note-icon" style="background:var(--purple-light)">5</div><div class="note-text"><strong>従業員数割</strong> - 従業員数の比率で分担</div></div>
+    </div>
+  </div>`;
+  calcCost();
+}
+function calcCost(){
+  const total=parseFloat(document.getElementById('sim-total')?.value||0);
+  const method=document.getElementById('sim-method')?.value||'vehicle_ratio';
+  const kamV=parseFloat(document.getElementById('sim-kam-vehicles')?.value||8);
+  const totalV=parseFloat(document.getElementById('sim-total-vehicles')?.value||46);
+  let share=0;
+  if(method==='vehicle_ratio')share=totalV?kamV/totalV:0;
+  else if(method==='equal')share=0.5;
+  else if(method==='employee_ratio')share=totalV?kamV/totalV:0;
+  else share=totalV?kamV/totalV:0;
+  const shareEl=document.getElementById('sim-share');
+  if(shareEl)shareEl.value=Math.round(share*1000)/10;
+  const result=document.getElementById('sim-result');
+  if(result)result.textContent='KAM月額負担: '+Math.round(total*share).toLocaleString()+'円';
+}
+
+// Data Management
+function renderData(){
+  const el=document.getElementById('tab-data');
+  el.innerHTML=`<div class="section-card"><h3>&#x1F4BE; データ管理</h3>
+    <div class="data-actions">
+      <button class="btn-export" onclick="exportData()">JSONエクスポート</button>
+      <button class="btn-import" onclick="document.getElementById('import-file').click()">JSONインポート</button>
+      <button class="btn-reset" onclick="if(confirm('全データを初期状態に戻しますか？'))resetState()">初期化</button>
+    </div>
+    <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(event)">
+    <div style="margin-top:20px;font-size:12px;color:var(--text-light)">データはブラウザのローカルストレージに保存されています。定期的にエクスポートしてバックアップしてください。</div>
+  </div>`;
+}
+function exportData(){
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='kam-dashboard-'+new Date().toISOString().slice(0,10)+'.json';a.click();
+}
+function importData(e){
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    try{const d=JSON.parse(ev.target.result);if(d.tasks&&d.subsidies){state=d;saveState();renderAll();alert('データをインポートしました');}else{alert('無効なファイル形式です');}}
+    catch(err){alert('インポートエラー: '+err.message);}
+  };
+  reader.readAsText(file);
+}
+
+// Render All
+function renderAll(){
+  document.getElementById('today-badge').textContent=new Date().toLocaleDateString('ja-JP');
+  renderDashboard();renderTasks();renderGantt();renderSubsidies();renderMilestones();renderRisks();renderTransfer();renderCost();renderData();
+}
+renderAll();
+</script>
+</body>
+</html>
